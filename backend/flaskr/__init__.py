@@ -60,7 +60,7 @@ def create_app(test_config=None):
         # current_categories = {}
         # for cat in cat_formatted:
         #     current_categories = {cat.id: cat.type}
-        print(">>>>>>>>>>>>>", categories)
+        # print(">>>>>>>>>>>>>", categories)
         if len(categories) == 0:
             abort(404)
 
@@ -85,7 +85,7 @@ def create_app(test_config=None):
         # Implement pagination
         selection = Question.query.order_by(Question.id).all()
         current_questions = paginate_questions(request, selection)
-        print("llllllllllll", current_questions)
+        # print("llllllllllll", current_questions)
         categories_query = Category.query.all()
         categories = {category.id: category.type for category in categories_query}
 
@@ -198,6 +198,40 @@ def create_app(test_config=None):
     categories in the left column will cause only questions of that
     category to be shown.
     """
+
+    @app.route("/categories/<category_id>/questions")
+    # @cross_origin
+    def retrieve_questions_from_category(category_id):
+        # Implement pagination
+        current_category = Category.query.filter(
+            Category.id == category_id
+        ).one_or_none()
+
+        if current_category is None:
+            abort(404)
+
+        selection = (
+            Question.query.filter(Question.category == category_id)
+            .order_by(Question.id)
+            .all()
+        )
+        current_questions = paginate_questions(request, selection)
+
+        # print("llllllllllll", current_category.type)
+
+        if len(current_questions) == 0:
+            abort(404)
+
+        return jsonify(
+            {
+                "success": True,
+                "questions": current_questions,
+                "total_questions": len(
+                    Question.query.filter(Question.category == category_id).all()
+                ),
+                "current_category": current_category.type,
+            }
+        )
 
     """
     @TODO:
