@@ -4,7 +4,6 @@ from flask import Flask, request, abort, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 import random
-
 from models import setup_db, Question, Category
 
 QUESTIONS_PER_PAGE = 10
@@ -223,6 +222,44 @@ def create_app(test_config=None):
     categories in the left column will cause only questions of that
     category to be shown.
     """
+
+    @app.route("/quizzes", methods=["POST"])
+    def get_question_for_quiz():
+        body = request.get_json()
+        previous_questions = body.get("previous_questions")
+        quiz_category = body.get("quiz_category")
+        category_id = quiz_category.get("id")
+
+        try:
+            if category_id == 0:
+                print("here")
+                question_ids = Question.query.with_entities(Question.id).all()
+
+            else:
+                question_ids = (
+                    Question.query.with_entities(Question.id)
+                    .filter(Question.category == int(category_id))
+                    .all()
+                )
+
+            id_list = []
+            for item in question_ids:
+                id_list.append(item.id)
+
+            possible_questions = set(id_list).difference(set(previous_questions))
+
+            question_id = random.choice(list(possible_questions))
+            question = Question.query.filter(Question.id == int(question_id)).one()
+
+            return jsonify(
+                {
+                    "success": True,
+                    "question": question.format(),
+                }
+            )
+
+        except:
+            abort(422)
 
     @app.route("/categories/<category_id>/questions")
     # @cross_origin
