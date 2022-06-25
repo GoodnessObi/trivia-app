@@ -28,6 +28,10 @@ class TriviaTestCase(unittest.TestCase):
         }
 
         self.search_term = {"searchTerm": "What is the reason"}
+        self.search_data = {
+            "previous_questions": [],
+            "quiz_category": {"type": "Click", "id": 0},
+        }
 
         # binds the app to the current context
         with self.app.app_context():
@@ -147,6 +151,15 @@ class TriviaTestCase(unittest.TestCase):
         self.assertTrue(len(data["questions"]))
         self.assertTrue(data["total_questions"])
         self.assertEqual(data["current_category"], None)
+
+    # get results for get questions to play
+    def test_get_question_for_quiz(self):
+        print("tessss", self.search_data)
+        res = self.client().post("/quizzes", json=self.search_data)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertTrue(len(data["question"]))
 
     # error handling
     def test_create_new_question(self):
