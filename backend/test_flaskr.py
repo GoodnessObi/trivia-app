@@ -21,13 +21,13 @@ class TriviaTestCase(unittest.TestCase):
         setup_db(self.app, self.database_path)
 
         self.new_question = {
-            "question": "What is my name",
+            "question": "What is the reason",
             "answer": "Neil Gaiman",
             "category": "5",
             "difficulty": 2,
         }
 
-        self.new_category = {"type": "test"}
+        self.search_term = {"searchTerm": "What is the reason"}
 
         # binds the app to the current context
         with self.app.app_context():
@@ -75,7 +75,7 @@ class TriviaTestCase(unittest.TestCase):
     def test_get_paginated_questions_from_category(self):
         res = self.client().get("/categories/5/questions")
         data = json.loads(res.data)
-        print("heyyyy", data, ">>>>>>")
+
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data["success"], True)
         self.assertTrue(len(data["questions"]))
@@ -137,6 +137,16 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 405)
         self.assertEqual(data["success"], False)
         self.assertEqual(data["message"], "method not allowed")
+
+    # get results for search questions
+    def test_search_questions(self):
+        res = self.client().post("/questions/search", json=self.search_term)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertTrue(len(data["questions"]))
+        self.assertTrue(data["total_questions"])
+        self.assertEqual(data["current_category"], None)
 
     # error handling
     def test_create_new_question(self):
