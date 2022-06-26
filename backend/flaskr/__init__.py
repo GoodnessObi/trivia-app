@@ -52,14 +52,9 @@ def create_app(test_config=None):
     @app.route("/categories")
     # @cross_origin
     def retrieve_categories():
-        # Implement pagination
         selection = Category.query.all()
-        # cat_formatted = [categories.format() for categories in selection]
-        categories = {cat.id: cat.type for cat in selection}
-        # current_categories = {}
-        # for cat in cat_formatted:
-        #     current_categories = {cat.id: cat.type}
-        # print(">>>>>>>>>>>>>", categories)
+        categories = {category.id: category.type for category in selection}
+
         if len(categories) == 0:
             abort(404)
 

@@ -65,11 +65,21 @@ The application is run on `http://127.0.0.1:5000/` by default and is a proxy in 
 ## API Documentation
 The Trivia API is organized around REST. It has predictable resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes and verbs.
 
-**Base URL**
+### Base URL
 The application presently runs only locally on: 
 ```
 http://127.0.0.1:5000/
 ```
+---
+### Error
+| HTTP Status Code Summary   |
+| :---  |    :----:          |  :----: |
+| 200   | ok                 | Everything worked as expected. | 
+| 404   | resource not found | The requested resource doesn't exist. | 
+| 422   | unprocessable      | The request entity was correct but the server was unable to process the contained instruction| 
+| 400   | bad request        | The request was unacceptable, often due to missing required parameter. | 
+| 405   | method not allowed | The request method is not supported
+
 ---
 
 `GET '/categories'`
