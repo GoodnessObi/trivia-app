@@ -79,9 +79,9 @@ http://127.0.0.1:5000/
 | 400  | bad request        | The request was unacceptable, often due to missing required parameter.                        |
 | 404  | resource not found | The requested resource doesn't exist.                                                         |
 | 405  | method not allowed | The request method is not supported                                                           |
-| 422  | uprocessable       | The request entity was correct but the server was unable to process the contained information |
+| 422  | unprocessable       | The request entity was correct but the server was unable to process the contained information |
 
-**Sample Request**
+**Sample Response**
 ```json
 {
   "error": 404,
