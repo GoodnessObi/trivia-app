@@ -27,7 +27,7 @@ class TriviaTestCase(unittest.TestCase):
             "difficulty": 2,
         }
 
-        self.search_term = {"searchTerm": "largest"}
+        self.search_term = {"searchTerm": "what is"}
         self.search_data = {
             "previous_questions": [],
             "quiz_category": {"type": "Click", "id": 0},
@@ -162,7 +162,6 @@ class TriviaTestCase(unittest.TestCase):
 
     # get results for get questions to play
     def test_get_question_for_quiz(self):
-        print("tessss", self.search_data)
         res = self.client().post("/quizzes", json=self.search_data)
         data = json.loads(res.data)
 
