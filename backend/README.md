@@ -58,6 +58,27 @@ createdb trivia_test
 psql trivia_test < trivia.psql
 python test_flaskr.py
 ```
+
+Alternatively,
+- Create the database and a user<br>
+In your terminal, navigate to the */trivia-app/backend/* directory, and run the following:
+```bash
+cd trivia-app/backend
+# Connect to the PostgreSQL
+psql postgres
+#View all databases
+\l
+# Create the database, create a user - `student`, grant all privileges to the student
+\i setup.sql
+# Exit the PostgreSQL prompt
+\q
+```
+- then...
+
+```
+psql trivia_test < trivia.psql
+python test_flaskr.py
+```
 ---
 
 ## Local Development 
@@ -118,11 +139,11 @@ psql postgres
 \q
 ```
 
-3. **Create tables**<br>
+2. **Create tables**<br>
 Once your database is created, you can create tables (`categories`) and (`questions`) and apply contraints
 ```bash
 # Mac users
-psql -f books.psql -U student -d bookshelf
+psql -f books.psql -U student -d trivia
 # Linux users
 su - postgres bash -c "psql trivia < /path/to/exercise/backend/trivia.psql"
 
