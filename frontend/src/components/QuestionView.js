@@ -25,7 +25,6 @@ class QuestionView extends Component {
       url: `/questions?page=${this.state.page}`, //TODO: update request URL
       type: 'GET',
       success: (result) => {
-        console.log('qqqqqqqqqqqqqqqqqqq', result)
         this.setState({
           questions: result.questions,
           totalQuestions: result.total_questions,

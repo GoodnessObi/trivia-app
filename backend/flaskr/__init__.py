@@ -52,14 +52,9 @@ def create_app(test_config=None):
     @app.route("/categories")
     # @cross_origin
     def retrieve_categories():
-        # Implement pagination
         selection = Category.query.all()
-        # cat_formatted = [categories.format() for categories in selection]
-        categories = {cat.id: cat.type for cat in selection}
-        # current_categories = {}
-        # for cat in cat_formatted:
-        #     current_categories = {cat.id: cat.type}
-        # print(">>>>>>>>>>>>>", categories)
+        categories = {category.id: category.type for category in selection}
+
         if len(categories) == 0:
             abort(404)
 
@@ -84,7 +79,6 @@ def create_app(test_config=None):
         # Implement pagination
         selection = Question.query.order_by(Question.id).all()
         current_questions = paginate_questions(request, selection)
-        # print("llllllllllll", current_questions)
         categories_query = Category.query.all()
         categories = {category.id: category.type for category in categories_query}
 
@@ -232,7 +226,6 @@ def create_app(test_config=None):
 
         try:
             if category_id == 0:
-                print("here")
                 question_ids = Question.query.with_entities(Question.id).all()
 
             else:
@@ -278,8 +271,6 @@ def create_app(test_config=None):
             .all()
         )
         current_questions = paginate_questions(request, selection)
-
-        # print("llllllllllll", current_category.type)
 
         if len(current_questions) == 0:
             abort(404)
