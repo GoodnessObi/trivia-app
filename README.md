@@ -70,17 +70,27 @@ The application presently runs only locally on:
 ```
 http://127.0.0.1:5000/
 ```
----
-### Error
-| HTTP Status Code Summary   |
-| :---  |    :----:          |  :----: |
-| 200   | ok                 | Everything worked as expected. | 
-| 404   | resource not found | The requested resource doesn't exist. | 
-| 422   | unprocessable      | The request entity was correct but the server was unable to process the contained instruction| 
-| 400   | bad request        | The request was unacceptable, often due to missing required parameter. | 
-| 405   | method not allowed | The request method is not supported
 
----
+### Error
+**HTTP Status Code Summary**
+| Code | Message            | Summary                                                                                       |
+|------|--------------------|-----------------------------------------------------------------------------------------------|
+| 200  | ok                 | Everything worked as expected.                                                                |
+| 400  | bad request        | The request was unacceptable, often due to missing required parameter.                        |
+| 404  | resource not found | The requested resource doesn't exist.                                                         |
+| 405  | method not allowed | The request method is not supported                                                           |
+| 422  | uprocessable       | The request entity was correct but the server was unable to process the contained information |
+
+**Sample Request**
+```json
+{
+  "error": 404,
+  "message": "resource not found",
+  "success": false
+}
+```
+
+### Endpoints
 
 `GET '/categories'`
 
