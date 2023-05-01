@@ -43,13 +43,16 @@ From within the `./src` directory first ensure you are working using your create
 To run the server, execute:
 
 ```bash
+export FLASK_APP=flaskr
 flask run --reload
 ```
 
 The `--reload` flag will detect file changes and restart the server automatically.
 
 ---
+
 ## Testing
+
 To deploy the tests, run
 
 ```bash
@@ -60,8 +63,10 @@ python test_flaskr.py
 ```
 
 Alternatively,
+
 - Create the database and a user<br>
-In your terminal, navigate to the */trivia-app/backend/* directory, and run the following:
+  In your terminal, navigate to the _/trivia-app/backend/_ directory, and run the following:
+
 ```bash
 cd trivia-app/backend
 # Connect to the PostgreSQL
@@ -73,22 +78,27 @@ psql postgres
 # Exit the PostgreSQL prompt
 \q
 ```
+
 - then...
 
 ```
 psql trivia_test < trivia.psql
 python test_flaskr.py
 ```
+
 ---
 
-## Local Development 
+## Local Development
+
 The instructions below are meant for the local setup.
 
 #### Pre-requisites
-* Developers using this project should already have Python3, pip and node installed on their local machines.
 
-* **Start your virtual environment** 
-From the backend folder run
+- Developers using this project should already have Python3, pip and node installed on their local machines.
+
+- **Start your virtual environment**
+  From the backend folder run
+
 ```bash
 # Mac users
 python3 -m venv venv
@@ -98,35 +108,41 @@ source venv/bin/activate
 > venv\Scripts\activate
 ```
 
-* **Install dependencies**<br>
-From the backend folder run 
+- **Install dependencies**<br>
+  From the backend folder run
+
 ```bash
-# All required packages are included in the requirements file. 
+# All required packages are included in the requirements file.
 pip3 install -r requirements.txt
 ```
 
-
 ### Step 0: Start/Stop the PostgreSQL server
+
 Mac users can follow the commands below:
+
 ```bash
 which postgres
 postgres --version
 # Start/stop
 pg_ctl -D /usr/local/var/postgres start
-pg_ctl -D /usr/local/var/postgres stop 
+pg_ctl -D /usr/local/var/postgres stop
 ```
+
 Linux users can follow the commands below:
+
 ```bash
 which postgres
 postgres --version
 # Start/stop
 sudo service postgresql start
-sudo service postgresql stop 
+sudo service postgresql stop
 ```
 
 ### Step 1 - Create and Populate the database
+
 1. **Create the database and a user**<br>
-In your terminal, navigate to the */trivia-app/backend/* directory, and run the following:
+   In your terminal, navigate to the _/trivia-app/backend/_ directory, and run the following:
+
 ```bash
 cd trivia-app/backend
 # Connect to the PostgreSQL
@@ -140,7 +156,8 @@ psql postgres
 ```
 
 2. **Create tables**<br>
-Once your database is created, you can create tables (`categories`) and (`questions`) and apply contraints
+   Once your database is created, you can create tables (`categories`) and (`questions`) and apply contraints
+
 ```bash
 # Mac users
 psql -f books.psql -U student -d trivia
@@ -148,4 +165,5 @@ psql -f books.psql -U student -d trivia
 su - postgres bash -c "psql trivia < /path/to/exercise/backend/trivia.psql"
 
 ```
-**You can even drop the database and repopulate it, if needed, using the commands above.** 
+
+**You can even drop the database and repopulate it, if needed, using the commands above.**
