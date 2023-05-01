@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import '../stylesheets/App.css';
-import Question from './Question.';
-import Search from './Search.';
+import '../../stylesheets/App.css';
+import Question from '../questions/Question.';
+import Search from '../shared/Search.';
 import $ from 'jquery';
 
 class QuestionView extends Component {
