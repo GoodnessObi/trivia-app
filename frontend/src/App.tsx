@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-// import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './stylesheets/App.css';
-import FormView from './quiz/components/FormView';
-import QuestionView from './quiz/components/QuestionView.';
-import Header from './quiz/components/Header';
-import QuizView from './quiz/components/QuizView.';
+import QuestionView from './components/quiz/QuestionView.';
+import Header from './components/shared/Header';
+import FormView from './components/questions/AddQuestion';
+import QuizView from './components/categories/QuizView.';
 
 class App extends Component {
 	render() {
