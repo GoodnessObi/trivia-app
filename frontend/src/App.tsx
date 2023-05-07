@@ -1,24 +1,28 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './stylesheets/App.css';
-import QuestionView from './components/quiz/QuestionView.';
+import QuestionList from './components/quiz/QuestionList.';
 import Header from './components/shared/Header';
 import FormView from './components/questions/AddQuestion';
 import QuizView from './components/categories/QuizView.';
+import { QuizProvider } from './context/QuizProvider';
 
 class App extends Component {
 	render() {
 		return (
 			<div className='App'>
 				<Header />
-				<BrowserRouter>
+				<QuizProvider>
+					<QuestionList />
+				</QuizProvider>
+				{/* <BrowserRouter>
 					<Routes>
-						<Route path='/' element={<QuestionView />} />
+						<Route path='/' element={<QuestionList />} />
 						<Route path='/add' element={<FormView />} />
 						<Route path='/play' element={<QuizView />} />
-						<Route element={<QuestionView />} />
+						<Route element={<QuestionList />} />
 					</Routes>
-				</BrowserRouter>
+				</BrowserRouter> */}
 			</div>
 		);
 	}
