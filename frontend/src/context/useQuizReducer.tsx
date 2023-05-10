@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer } from 'react';
 import { QuestionItem, Categories, QuizAction } from '../types';
-// import { v4 as uuid } from 'uuid';
+import { v4 as uuid } from 'uuid';
 
 interface QuizState {
 	questions: QuestionItem[];
@@ -21,8 +21,12 @@ export function useQuizReducer(): [QuizState, React.Dispatch<QuizAction>] {
 					categories: action.payload.data.categories,
 				};
 
-			case 'ADD':
-				return { ...state };
+			case 'ADD_QUESTION':
+				const question = {
+					id: uuid(),
+					...action.payload.question,
+				};
+				return { ...state, questions: { ...state.questions, ...question } };
 
 			case 'DELETE':
 				return {
@@ -42,7 +46,7 @@ export function useQuizReducer(): [QuizState, React.Dispatch<QuizAction>] {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const res = await fetch('/questions?page=1');
+			const res = await fetch('/questions?page=2');
 			const data = await res.json();
 			dispatch({ type: 'FETCH', payload: { data } });
 		};

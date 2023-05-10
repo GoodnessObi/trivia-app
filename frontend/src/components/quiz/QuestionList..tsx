@@ -5,29 +5,7 @@ import { useQuiz } from '../../context/QuizProvider';
 
 const QuestionList = () => {
 	const { questions, categories } = useQuiz();
-	// useEffect(() => {
-	// 	getQuestions();
-	// }, []);
 
-	// const getQuestions = () => {
-	// 	$.ajax({
-	// 		url: `/questions?page=${this.state.page}`, //TODO: update request URL
-	// 		type: 'GET',
-	// 		success: (result) => {
-	// 			this.setState({
-	// 				questions: result.questions,
-	// 				totalQuestions: result.total_questions,
-	// 				categories: result.categories,
-	// 				currentCategory: result.current_category,
-	// 			});
-	// 			return;
-	// 		},
-	// 		error: (error) => {
-	// 			alert('Unable to load questions. Please try your request again');
-	// 			return;
-	// 		},
-	// 	});
-	// };
 	return (
 		<div className='question-view'>
 			<div className='categories-list'>
@@ -39,13 +17,13 @@ const QuestionList = () => {
 					Categories
 				</h2>
 				<ul>
-					{Object.entries(categories).map(([key, value]) => (
+					{Object?.keys(categories).map((key) => (
 						<li key={key}>
-							{value}
+							{categories[+key]}
 							<img
 								className='category'
-								alt={`${value.toLowerCase()}`}
-								src={`${value.toLowerCase()}.svg`}
+								alt={`${categories[+key].toLowerCase()}`}
+								src={`${categories[+key].toLowerCase()}.svg`}
 							/>
 						</li>
 					))}

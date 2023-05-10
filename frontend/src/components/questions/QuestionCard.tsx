@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import '../../stylesheets/Question.css';
 import { QuestionItem } from '../../types';
+import { useQuiz } from '../../context/QuizProvider';
 
 type QuestionCardProps = {
 	questionItem: QuestionItem;
 };
 
 const QuestionCard = ({ questionItem }: QuestionCardProps) => {
+	const { categories } = useQuiz();
 	const [visibleAnswer, setVisibleAnswer] = useState(false);
 
 	const flipVisibility = () => {
@@ -18,8 +20,8 @@ const QuestionCard = ({ questionItem }: QuestionCardProps) => {
 			<div className='Question-status'>
 				<img
 					className='category'
-					alt={`${questionItem.category}.toLowerCase()`}
-					src={`${questionItem.category}.toLowerCase().svg`}
+					alt={`${categories[questionItem.category].toLowerCase()}`}
+					src={`${categories[questionItem.category].toLowerCase()}.svg`}
 				/>
 				<div className='difficulty'>Difficulty: {questionItem.difficulty}</div>
 				<img
