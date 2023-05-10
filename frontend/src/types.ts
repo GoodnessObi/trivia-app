@@ -1,7 +1,7 @@
 export type QuestionItem = {
 	id: string;
 	question: string;
-	answer: number;
+	answer: string;
 	category: number;
 	difficulty: number;
 };
@@ -21,9 +21,9 @@ export interface QuizFetchAction {
 }
 
 export interface QuizAddAction {
-	type: 'ADD';
+	type: 'ADD_QUESTION';
 	payload: {
-		question: QuestionItem;
+		question: Omit<QuestionItem, 'id'>;
 	};
 }
 
