@@ -20,6 +20,17 @@ export interface QuizFetchAction {
 	};
 }
 
+export interface QuizFetchByCatgeoryAction {
+	type: 'FETCH_BY_CATEGORY';
+	payload: {
+		data: {
+			questions: QuestionItem[];
+			totalQuestions: number;
+			currentCategory?: string;
+		};
+	};
+}
+
 export interface QuizAddAction {
 	type: 'ADD_QUESTION';
 	payload: {
@@ -34,5 +45,8 @@ export interface QuizDeleteAction {
 	};
 }
 
-export type QuizAction = QuizFetchAction | QuizAddAction | QuizDeleteAction;
-// | QuizRateAction
+export type QuizAction =
+	| QuizFetchAction
+	| QuizAddAction
+	| QuizDeleteAction
+	| QuizFetchByCatgeoryAction;
