@@ -5,9 +5,10 @@ import { useQuiz } from '../../context/QuizProvider';
 
 type QuestionCardProps = {
 	questionItem: QuestionItem;
+	deleteQuestion: (id: string) => {};
 };
 
-const QuestionCard = ({ questionItem }: QuestionCardProps) => {
+const QuestionCard = ({ questionItem, deleteQuestion }: QuestionCardProps) => {
 	const { categories } = useQuiz();
 	const [visibleAnswer, setVisibleAnswer] = useState(false);
 
@@ -28,7 +29,7 @@ const QuestionCard = ({ questionItem }: QuestionCardProps) => {
 					src='delete.png'
 					alt='delete'
 					className='delete'
-					// onClick={() => this.props.questionAction('DELETE')}
+					onClick={() => deleteQuestion(questionItem.id)}
 				/>
 			</div>
 			<div className='show-answer button' onClick={() => flipVisibility()}>

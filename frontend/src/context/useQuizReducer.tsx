@@ -31,6 +31,9 @@ export function useQuizReducer(): [QuizState, React.Dispatch<QuizAction>] {
 			case 'DELETE':
 				return {
 					...state,
+					questions: state.questions.filter(
+						({ id }) => action.payload.questionId !== id
+					),
 				};
 
 			default:
@@ -46,7 +49,7 @@ export function useQuizReducer(): [QuizState, React.Dispatch<QuizAction>] {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const res = await fetch('/questions?page=2');
+			const res = await fetch('/questions?page=1');
 			const data = await res.json();
 			dispatch({ type: 'FETCH', payload: { data } });
 		};

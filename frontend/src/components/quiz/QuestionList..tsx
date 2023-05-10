@@ -4,7 +4,19 @@ import QuestionCard from '../questions/QuestionCard';
 import { useQuiz } from '../../context/QuizProvider';
 
 const QuestionList = () => {
-	const { questions, categories } = useQuiz();
+	const { questions, categories, quizDispatch } = useQuiz();
+
+	const deleteQuestion = async (id: string) => {
+		try {
+			const fetchResponse = await fetch(`/questions/${id}`, {
+				method: 'DELETE',
+			});
+			const data = await fetchResponse.json();
+			quizDispatch({ type: 'DELETE', payload: { questionId: data.deleted } });
+		} catch (e) {
+			console.log(e);
+		}
+	};
 
 	return (
 		<div className='question-view'>
@@ -33,7 +45,11 @@ const QuestionList = () => {
 			<div className='questions-list'>
 				<h2>Questions</h2>
 				{questions.map((question, i) => (
-					<QuestionCard key={i} questionItem={question} />
+					<QuestionCard
+						key={i}
+						questionItem={question}
+						deleteQuestion={deleteQuestion}
+					/>
 				))}
 				{/* <div className='pagination-menu'>{this.createPagination()}</div> */}
 			</div>
