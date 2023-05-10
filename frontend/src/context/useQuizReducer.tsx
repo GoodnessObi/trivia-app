@@ -6,6 +6,7 @@ interface QuizState {
 	questions: QuestionItem[];
 	categories: Categories;
 	initialized: boolean;
+	currentCategory?: string;
 }
 
 export function useQuizReducer(): [QuizState, React.Dispatch<QuizAction>] {
@@ -19,6 +20,12 @@ export function useQuizReducer(): [QuizState, React.Dispatch<QuizAction>] {
 					initialized: true,
 					questions: action.payload.data.questions,
 					categories: action.payload.data.categories,
+				};
+			case 'FETCH_BY_CATEGORY':
+				return {
+					...state,
+					questions: action.payload.data.questions,
+					currentCategory: action.payload.data.currentCategory,
 				};
 
 			case 'ADD_QUESTION':

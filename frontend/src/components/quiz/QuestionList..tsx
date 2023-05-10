@@ -18,6 +18,16 @@ const QuestionList = () => {
 		}
 	};
 
+	const fetchByCategory = async (id: string) => {
+		try {
+			const res = await fetch(`/categories/${id}/questions`);
+			const data = await res.json();
+			quizDispatch({ type: 'FETCH_BY_CATEGORY', payload: { data } });
+		} catch (e) {
+			console.log(e);
+		}
+	};
+
 	return (
 		<div className='question-view'>
 			<div className='categories-list'>
@@ -30,7 +40,7 @@ const QuestionList = () => {
 				</h2>
 				<ul>
 					{Object?.keys(categories).map((key) => (
-						<li key={key}>
+						<li key={key} onClick={() => fetchByCategory(key)}>
 							{categories[+key]}
 							<img
 								className='category'
@@ -56,41 +66,6 @@ const QuestionList = () => {
 		</div>
 	);
 };
-
-// class QuestionView extends Component {
-// 	constructor() {
-// 		super();
-// 		this.state = {
-// 			questions: [],
-// 			page: 1,
-// 			totalQuestions: 0,
-// 			categories: {},
-// 			currentCategory: null,
-// 		};
-// 	}
-
-// selectPage(num) {
-// 	this.setState({ page: num }, () => this.getQuestions());
-// }
-
-// createPagination() {
-// 	let pageNumbers = [];
-// 	let maxPage = Math.ceil(this.state.totalQuestions / 10);
-// 	for (let i = 1; i <= maxPage; i++) {
-// 		pageNumbers.push(
-// 			<span
-// 				key={i}
-// 				className={`page-num ${i === this.state.page ? 'active' : ''}`}
-// 				onClick={() => {
-// 					this.selectPage(i);
-// 				}}
-// 			>
-// 				{i}
-// 			</span>
-// 		);
-// 	}
-// 	return pageNumbers;
-// }
 
 // getByCategory = (id) => {
 // 	$.ajax({
@@ -136,30 +111,5 @@ const QuestionList = () => {
 // 		},
 // 	});
 // };
-
-// questionAction = (id) => (action) => {
-// 	if (action === 'DELETE') {
-// 		if (window.confirm('are you sure you want to delete the question?')) {
-// 			$.ajax({
-// 				url: `/questions/${id}`, //TODO: update request URL
-// 				type: 'DELETE',
-// 				success: (result) => {
-// 					this.getQuestions();
-// 				},
-// 				error: (error) => {
-// 					alert('Unable to load questions. Please try your request again');
-// 					return;
-// 				},
-// 			});
-// 		}
-// 	}
-// };
-
-// 	render() {
-// 		return (
-
-// 		);
-// 	}
-// }
 
 export default QuestionList;
