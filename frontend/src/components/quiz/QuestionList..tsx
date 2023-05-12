@@ -1,10 +1,10 @@
 import '../../stylesheets/App.css';
 import QuestionCard from '../questions/QuestionCard';
 // import Search from '../shared/Search.';
-import { useQuiz } from '../../context/QuizProvider';
+import { useQuestion } from '../../context/Question/QuestionProvider';
 
 const QuestionList = () => {
-	const { questions, categories, quizDispatch } = useQuiz();
+	const { questions, categories, questionDispatch } = useQuestion();
 
 	const deleteQuestion = async (id: string) => {
 		try {
@@ -12,7 +12,10 @@ const QuestionList = () => {
 				method: 'DELETE',
 			});
 			const data = await fetchResponse.json();
-			quizDispatch({ type: 'DELETE', payload: { questionId: data.deleted } });
+			questionDispatch({
+				type: 'DELETE',
+				payload: { questionId: data.deleted },
+			});
 		} catch (e) {
 			console.log(e);
 		}
@@ -22,7 +25,7 @@ const QuestionList = () => {
 		try {
 			const res = await fetch(`/categories/${id}/questions`);
 			const data = await res.json();
-			quizDispatch({ type: 'FETCH_BY_CATEGORY', payload: { data } });
+			questionDispatch({ type: 'FETCH_BY_CATEGORY', payload: { data } });
 		} catch (e) {
 			console.log(e);
 		}

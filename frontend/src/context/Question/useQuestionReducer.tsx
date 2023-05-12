@@ -1,18 +1,24 @@
 import React, { useEffect, useReducer } from 'react';
-import { QuestionItem, Categories, QuizAction } from '../types';
+import { QuestionItem, Categories, QuestionAction } from '../../types';
 import { v4 as uuid } from 'uuid';
 
-interface QuizState {
+interface QuestionState {
 	questions: QuestionItem[];
 	categories: Categories;
 	initialized: boolean;
 	currentCategory?: string;
 }
 
-export function useQuizReducer(): [QuizState, React.Dispatch<QuizAction>] {
+export function useQuestionReducer(): [
+	QuestionState,
+	React.Dispatch<QuestionAction>
+] {
 	// TODO: Implement all action processing
 
-	const quizReducer = (state: QuizState, action: QuizAction): QuizState => {
+	const questionReducer = (
+		state: QuestionState,
+		action: QuestionAction
+	): QuestionState => {
 		switch (action.type) {
 			case 'FETCH':
 				return {
@@ -48,7 +54,7 @@ export function useQuizReducer(): [QuizState, React.Dispatch<QuizAction>] {
 		}
 	};
 
-	const [state, dispatch] = useReducer(quizReducer, {
+	const [state, dispatch] = useReducer(questionReducer, {
 		questions: [],
 		categories: {},
 		initialized: false,

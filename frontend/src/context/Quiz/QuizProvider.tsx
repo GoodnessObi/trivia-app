@@ -1,10 +1,9 @@
 import { useQuizReducer } from './useQuizReducer';
 import React, { useContext } from 'react';
-import { QuestionItem, Categories, QuizAction } from '../types';
+import { QuizAction, QuizState } from '../../types';
 
 type QuizContextType = {
-	questions: QuestionItem[];
-	categories: Categories;
+	quizState: QuizState;
 	quizDispatch: React.Dispatch<QuizAction>;
 };
 
@@ -17,11 +16,10 @@ type QuizProviderProps = {
 };
 
 export const QuizProvider: React.FC<QuizProviderProps> = ({ children }) => {
-	const [{ initialized, categories, questions }, quizDispatch] =
-		useQuizReducer();
+	const [quizState, quizDispatch] = useQuizReducer();
 	return (
-		<QuizContext.Provider value={{ questions, categories, quizDispatch }}>
-			{initialized ? children : <div>loading...</div>}
+		<QuizContext.Provider value={{ quizState, quizDispatch }}>
+			{children}
 		</QuizContext.Provider>
 	);
 };
