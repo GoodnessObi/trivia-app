@@ -21,9 +21,8 @@ export interface QuestionFetchAction {
 }
 
 export type QuizState = {
-	categories: Categories;
 	currentCategory?: string;
-	quizCategory: { type?: string; id?: number };
+	quizCategory: { type: string; id: number | null };
 	previousQuestions: string[];
 	showAnswer: boolean;
 	numCorrect: number;
@@ -63,25 +62,38 @@ export type QuestionAction =
 	| QuestionDeleteAction
 	| QuestionFetchByCatgeoryAction;
 
+export interface QuizSetCategoryAction {
+	type: 'SET_CATEGORY';
+	payload: {
+		quizCategory: { type: string; id: number };
+		previousQuestions: string[];
+	};
+}
+
+export interface QuizDisplayAction {
+	type: 'DISPLAY_QUESTION';
+	payload: {
+		question: { id: string; question: string };
+	};
+}
+
 export interface QuizFetchAction {
 	type: 'FETCH_QUESTION';
 	payload: {
-		data: {
-			// questions: QuestionItem[];
-			// categories: { [key: number]: string };
-			// totalQuestions: number;
-			// currentCategory?: number;
-		};
+		question: { id: string; question: string };
 	};
 }
 
-export interface QuizCategoryFetchAction {
-	type: 'FETCH_CATEGORY';
-	payload: {
-		data: {
-			categories: Categories;
-		};
-	};
-}
+// export interface QuizCategoryDIsplayAction {
+// 	type: 'FETCH_CATEGORY';
+// 	payload: {
+// 		data: {
+// 			category: { type?: string; id?: number };
+// 		};
+// 	};
+// }
 
-export type QuizAction = QuizFetchAction | QuizCategoryFetchAction;
+export type QuizAction =
+	| QuizFetchAction
+	| QuizDisplayAction
+	| QuizSetCategoryAction;

@@ -1,19 +1,31 @@
 import React, { useEffect, useReducer } from 'react';
 import { QuizAction, QuizState } from '../../types';
-// import { v4 as uuid } from 'uuid';
 
 export function useQuizReducer(): [QuizState, React.Dispatch<QuizAction>] {
 	const quizReducer = (state: QuizState, action: QuizAction): QuizState => {
 		switch (action.type) {
-			case 'FETCH':
+			case 'SET_CATEGORY':
 				return {
 					...state,
+					quizCategory: action.payload.quizCategory,
+					previousQuestions: [...action.payload.previousQuestions],
 				};
-			case 'FETCH_CATEGORY':
-				console.log('dispatched');
+			case 'FETCH_QUESTION':
 				return {
 					...state,
-					categories: action.payload.data.categories,
+					currentQuestion: action.payload.question,
+					showAnswer: false,
+					guess: '',
+					forceEnd: action.payload.question ? false : true,
+				};
+			case 'DISPLAY_QUESTION':
+				console.log('dispatched', action.payload);
+				return {
+					...state,
+					currentQuestion: action.payload.question,
+					showAnswer: false,
+					guess: '',
+					forceEnd: action.payload.question ? false : true,
 				};
 			default:
 				return state;
@@ -21,8 +33,7 @@ export function useQuizReducer(): [QuizState, React.Dispatch<QuizAction>] {
 	};
 
 	const initialState = {
-		categories: {},
-		quizCategory: { type: '', id: 0 },
+		quizCategory: { type: '', id: null },
 		previousQuestions: [],
 		showAnswer: false,
 		numCorrect: 0,
@@ -34,15 +45,29 @@ export function useQuizReducer(): [QuizState, React.Dispatch<QuizAction>] {
 	const [state, dispatch] = useReducer(quizReducer, initialState);
 
 	useEffect(() => {
-		const fetchData = async () => {
-			const res = await fetch('/categories');
-			const data = await res.json();
-			console.log(data, 'categories');
-			dispatch({ type: 'FETCH_CATEGORY', payload: { data } });
-		};
+		if (state.quizCategory.id !== null) {
+			const requestOptions = {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					previous_questions: state.previousQuestions,
+					quiz_category: state.quizCategory,
+				}),
+			};
 
-		fetchData();
-	}, []);
+			const getNextQuestion = async () => {
+				const fetchResponse = await fetch('/quizzes', requestOptions);
+				const data = await fetchResponse.json();
+				console.log(data, 'quiz');
+				dispatch({
+					type: 'FETCH_QUESTION',
+					payload: { question: data.question },
+				});
+			};
+
+			getNextQuestion();
+		}
+	}, [state.quizCategory, state.previousQuestions]);
 
 	return [state, dispatch];
 }

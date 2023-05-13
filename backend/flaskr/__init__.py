@@ -223,6 +223,7 @@ def create_app(test_config=None):
         previous_questions = body.get("previous_questions")
         quiz_category = body.get("quiz_category")
         category_id = int(quiz_category.get("id"))
+        print('>>>>>>>', body)
         try:
             if category_id == 0:
                 question_ids = Question.query.with_entities(Question.id).all()
@@ -234,21 +235,27 @@ def create_app(test_config=None):
                     .all()
                 )
 
-            id_list = []
-            for item in question_ids:
-                id_list.append(item.id)
-
-            possible_questions = set(id_list).difference(set(previous_questions))
-
-            question_id = random.choice(list(possible_questions))
-            question = Question.query.filter(Question.id == int(question_id)).one()
-
-            return jsonify(
-                {
-                    "success": True,
-                    "question": question.format(),
+            if len(question_ids) == 0:
+                return {
+                    "sucsess": True,
+                    "question": ''
                 }
-            )
+            else:
+                id_list = []
+                for item in question_ids:
+                    id_list.append(item.id)
+
+                possible_questions = set(id_list).difference(set(previous_questions))
+
+                question_id = random.choice(list(possible_questions))
+                question = Question.query.filter(Question.id == int(question_id)).one()
+
+                return jsonify(
+                    {
+                        "success": True,
+                        "question": question.format(),
+                    }
+                )
 
         except:
             abort(422)

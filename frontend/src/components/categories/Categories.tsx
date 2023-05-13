@@ -3,19 +3,19 @@ import { Categories } from '../../types';
 
 type CategoriesProps = {
 	categories: Categories;
-	selectCategory: (type?: string, id?: number) => void;
+	selectCategory: (type: string, id: number) => void;
 };
 
 const CategoriesList: React.JSXElementConstructor<CategoriesProps> = ({
 	categories,
 	selectCategory,
 }) => {
-	console.log(categories, 'iiiii');
+	// console.log(categories, 'iiiii');
 	return (
 		<div className='quiz-play-holder'>
 			<div className='choose-header'>Choose Category</div>
 			<div className='category-holder'>
-				<div className='play-category' onClick={() => selectCategory()}>
+				<div className='play-category' onClick={() => selectCategory('all', 0)}>
 					ALL
 				</div>
 				{Object.keys(categories).map((id) => {
