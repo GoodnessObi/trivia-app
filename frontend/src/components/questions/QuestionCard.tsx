@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import '../../stylesheets/Question.css';
 import { QuestionItem } from '../../types';
-import { useQuiz } from '../../context/QuizProvider';
+import { useQuestion } from '../../context/Question/QuestionProvider';
 
 type QuestionCardProps = {
 	questionItem: QuestionItem;
@@ -9,7 +9,7 @@ type QuestionCardProps = {
 };
 
 const QuestionCard = ({ questionItem, deleteQuestion }: QuestionCardProps) => {
-	const { categories } = useQuiz();
+	const { categories } = useQuestion();
 	const [visibleAnswer, setVisibleAnswer] = useState(false);
 
 	const flipVisibility = () => {

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import '../../stylesheets/FormView.css';
-import { useQuiz } from '../../context/QuizProvider';
+import { useQuestion } from '../../context/Question/QuestionProvider';
 
 const FormView = () => {
-	const { categories, quizDispatch } = useQuiz();
+	const { categories, questionDispatch } = useQuestion();
 	const initialState = {
 		question: '',
 		answer: '',
@@ -38,7 +38,10 @@ const FormView = () => {
 		try {
 			const fetchResponse = await fetch('/questions', requestOptions);
 			const data = await fetchResponse.json();
-			quizDispatch({ type: 'ADD_QUESTION', payload: { question: formState } });
+			questionDispatch({
+				type: 'ADD_QUESTION',
+				payload: { question: formState },
+			});
 			clearForm();
 			return data;
 		} catch (e) {
