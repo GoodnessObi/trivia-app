@@ -26,9 +26,10 @@ export type QuizState = {
 	previousQuestions: string[];
 	showAnswer: boolean;
 	numCorrect: number;
-	currentQuestion: { id: string; question: string };
+	currentQuestion: QuestionItem;
 	guess: string;
-	forceEnd: boolean;
+	isCorrect: boolean;
+	endGame: boolean;
 };
 
 export interface QuestionFetchByCatgeoryAction {
@@ -70,30 +71,38 @@ export interface QuizSetCategoryAction {
 	};
 }
 
-export interface QuizDisplayAction {
-	type: 'DISPLAY_QUESTION';
+export interface QuizStartAction {
+	type: 'START_QUIZ';
 	payload: {
-		question: { id: string; question: string };
+		question: QuestionItem;
 	};
 }
 
 export interface QuizFetchAction {
-	type: 'FETCH_QUESTION';
+	type: 'FETCH_QUIZ';
 	payload: {
-		question: { id: string; question: string };
+		currentQuestion: QuestionItem;
+	};
+}
+export interface QuizHandleChangeAction {
+	type: 'MAKE_GUESS';
+	payload: {
+		guess: string;
 	};
 }
 
-// export interface QuizCategoryDIsplayAction {
-// 	type: 'FETCH_CATEGORY';
-// 	payload: {
-// 		data: {
-// 			category: { type?: string; id?: number };
-// 		};
-// 	};
-// }
+export interface QuizSubmitGuessAction {
+	type: 'SUBMIT_GUESS';
+}
+
+export interface QuizResetAction {
+	type: 'RESET_QUIZ';
+}
 
 export type QuizAction =
 	| QuizFetchAction
-	| QuizDisplayAction
-	| QuizSetCategoryAction;
+	| QuizStartAction
+	| QuizSetCategoryAction
+	| QuizSubmitGuessAction
+	| QuizHandleChangeAction
+	| QuizResetAction;

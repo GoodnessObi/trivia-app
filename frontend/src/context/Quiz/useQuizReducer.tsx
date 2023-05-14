@@ -1,7 +1,34 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useCallback, useEffect, useReducer } from 'react';
 import { QuizAction, QuizState } from '../../types';
 
 export function useQuizReducer(): [QuizState, React.Dispatch<QuizAction>] {
+	const evaluateAnswer = (guess: string, answer: string) => {
+		const formatGuess = guess
+			// eslint-disable-next-line
+			.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '')
+			.toLowerCase();
+
+		const answerArray = answer.toLowerCase().split(' ');
+		return answerArray.every((el: string) => formatGuess.includes(el));
+	};
+
+	const initialState = {
+		quizCategory: { type: '', id: null },
+		previousQuestions: [],
+		showAnswer: false,
+		numCorrect: 0,
+		currentQuestion: {
+			id: '',
+			question: '',
+			answer: '',
+			category: 0,
+			difficulty: 0,
+		},
+		guess: '',
+		isCorrect: false,
+		endGame: true,
+	};
+
 	const quizReducer = (state: QuizState, action: QuizAction): QuizState => {
 		switch (action.type) {
 			case 'SET_CATEGORY':
@@ -10,64 +37,71 @@ export function useQuizReducer(): [QuizState, React.Dispatch<QuizAction>] {
 					quizCategory: action.payload.quizCategory,
 					previousQuestions: [...action.payload.previousQuestions],
 				};
-			case 'FETCH_QUESTION':
+			case 'START_QUIZ':
 				return {
 					...state,
 					currentQuestion: action.payload.question,
 					showAnswer: false,
 					guess: '',
-					forceEnd: action.payload.question ? false : true,
+					endGame: false,
+					isCorrect: false,
 				};
-			case 'DISPLAY_QUESTION':
-				console.log('dispatched', action.payload);
+			case 'FETCH_QUIZ':
 				return {
 					...state,
-					currentQuestion: action.payload.question,
-					showAnswer: false,
-					guess: '',
-					forceEnd: action.payload.question ? false : true,
+					previousQuestions: [
+						...state.previousQuestions,
+						action.payload.currentQuestion.id,
+					],
 				};
+			case 'MAKE_GUESS':
+				return {
+					...state,
+					guess: action.payload.guess,
+				};
+			case 'SUBMIT_GUESS':
+				return {
+					...state,
+					showAnswer: true,
+					numCorrect: !evaluateAnswer(state.guess, state.currentQuestion.answer)
+						? state.numCorrect
+						: state.numCorrect++,
+					isCorrect: evaluateAnswer(state.guess, state.currentQuestion.answer)
+						? true
+						: false,
+				};
+			case 'RESET_QUIZ':
+				return { ...state, ...initialState };
 			default:
 				return state;
 		}
 	};
 
-	const initialState = {
-		quizCategory: { type: '', id: null },
-		previousQuestions: [],
-		showAnswer: false,
-		numCorrect: 0,
-		currentQuestion: { id: '', question: '' },
-		guess: '',
-		forceEnd: false,
-	};
-
 	const [state, dispatch] = useReducer(quizReducer, initialState);
+
+	const fetchQuestion = useCallback(async () => {
+		const requestOptions = {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+				previous_questions: state.previousQuestions,
+				quiz_category: state.quizCategory,
+			}),
+		};
+
+		const fetchResponse = await fetch('/quizzes', requestOptions);
+		const data = await fetchResponse.json();
+		dispatch({
+			type: 'START_QUIZ',
+			payload: { question: data.question },
+		});
+	}, [state.previousQuestions, state.quizCategory]);
 
 	useEffect(() => {
 		if (state.quizCategory.id !== null) {
-			const requestOptions = {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({
-					previous_questions: state.previousQuestions,
-					quiz_category: state.quizCategory,
-				}),
-			};
-
-			const getNextQuestion = async () => {
-				const fetchResponse = await fetch('/quizzes', requestOptions);
-				const data = await fetchResponse.json();
-				console.log(data, 'quiz');
-				dispatch({
-					type: 'FETCH_QUESTION',
-					payload: { question: data.question },
-				});
-			};
-
-			getNextQuestion();
+			fetchQuestion();
 		}
-	}, [state.quizCategory, state.previousQuestions]);
+	}, [state.quizCategory.id, fetchQuestion]);
 
 	return [state, dispatch];
 }

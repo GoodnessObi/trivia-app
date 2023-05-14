@@ -1,10 +1,11 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './stylesheets/App.css';
-import QuestionList from './components/quiz/QuestionList.';
+import QuestionList from './components/questions/QuestionList.';
 import Header from './components/shared/Header';
 import FormView from './components/questions/AddQuestion';
-import QuizView from './components/categories/QuizView.';
+import QuizView from './components/quiz/QuizView.';
 import { QuestionProvider } from './context/Question/QuestionProvider';
+import { QuizProvider } from './context/Quiz/QuizProvider';
 
 const App = () => {
 	return (
@@ -12,11 +13,13 @@ const App = () => {
 			<BrowserRouter>
 				<Header />
 				<QuestionProvider>
-					<Routes>
-						<Route path='/' element={<QuestionList />} />
-						<Route path='/add' element={<FormView />} />
-						<Route path='/play' element={<QuizView />} />
-					</Routes>
+					<QuizProvider>
+						<Routes>
+							<Route path='/' element={<QuestionList />} />
+							<Route path='/add' element={<FormView />} />
+							<Route path='/play' element={<QuizView />} />
+						</Routes>
+					</QuizProvider>
 				</QuestionProvider>
 			</BrowserRouter>
 		</div>

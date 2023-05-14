@@ -33,7 +33,7 @@ export const QuestionProvider: React.FC<QuestionProviderProps> = ({
 export const useQuestion = () => {
 	const questionCtx = useContext(QuestionContext);
 	if (!questionCtx) {
-		throw new Error('Component beyond MovieContext!');
+		throw new Error('Component beyond QuestionContext!');
 	}
 	return questionCtx;
 };

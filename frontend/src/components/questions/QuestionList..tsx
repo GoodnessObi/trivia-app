@@ -1,5 +1,5 @@
 import '../../stylesheets/App.css';
-import QuestionCard from '../questions/QuestionCard';
+import QuestionCard from './QuestionCard';
 // import Search from '../shared/Search.';
 import { useQuestion } from '../../context/Question/QuestionProvider';
 

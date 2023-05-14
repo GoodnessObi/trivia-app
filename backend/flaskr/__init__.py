@@ -238,7 +238,7 @@ def create_app(test_config=None):
             if len(question_ids) == 0:
                 return {
                     "sucsess": True,
-                    "question": ''
+                    "question": {}
                 }
             else:
                 id_list = []
@@ -246,6 +246,12 @@ def create_app(test_config=None):
                     id_list.append(item.id)
 
                 possible_questions = set(id_list).difference(set(previous_questions))
+
+                if len(possible_questions) == 0:
+                    return {
+                        "success": True,
+                        "question": {}
+                    }
 
                 question_id = random.choice(list(possible_questions))
                 question = Question.query.filter(Question.id == int(question_id)).one()
