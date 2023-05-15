@@ -1,4 +1,5 @@
 import { useQuiz } from '../../context/Quiz/QuizProvider';
+import Modal from '../shared/Modal';
 import FinalScore from './FinalScore';
 import ShowAnswer from './ShowAnswer';
 
@@ -23,7 +24,9 @@ const PlayQuizForm = () => {
 	return (
 		<>
 			{Object.keys(currentQuestion).length === 0 ? (
-				<FinalScore />
+				<Modal>
+					<FinalScore />
+				</Modal>
 			) : (
 				<div className='quiz-play-holder'>
 					<div className='quiz-question'>{currentQuestion.question}</div>
@@ -41,7 +44,11 @@ const PlayQuizForm = () => {
 							onClick={submitGuess}
 						/>
 					</form>
-					{showAnswer && <ShowAnswer />}
+					{showAnswer && (
+						<Modal>
+							<ShowAnswer />
+						</Modal>
+					)}
 				</div>
 			)}
 		</>
