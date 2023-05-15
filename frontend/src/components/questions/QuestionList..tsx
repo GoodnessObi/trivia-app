@@ -1,7 +1,7 @@
 import '../../stylesheets/App.css';
 import QuestionCard from './QuestionCard';
-// import Search from '../shared/Search.';
 import { useQuestion } from '../../context/Question/QuestionProvider';
+import Search from '../shared/Search.';
 
 const QuestionList = () => {
 	const { questions, categories, questionDispatch } = useQuestion();
@@ -31,6 +31,27 @@ const QuestionList = () => {
 		}
 	};
 
+	const searchQuestions = async (
+		query: string,
+		e: React.FormEvent<HTMLFormElement>
+	) => {
+		e.preventDefault();
+		const requestOptions = {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+				searchTerm: query,
+			}),
+		};
+		try {
+			const res = await fetch('/questions/search', requestOptions);
+			const data = await res.json();
+			questionDispatch({ type: 'SEARCH', payload: { data } });
+		} catch (e) {
+			console.log(e);
+		}
+	};
+
 	return (
 		<div className='question-view'>
 			<div className='categories-list'>
@@ -53,7 +74,7 @@ const QuestionList = () => {
 						</li>
 					))}
 				</ul>
-				{/* <Search submitSearch={this.submitSearch} /> */}
+				<Search submitSearch={searchQuestions} />
 			</div>
 			<div className='questions-list'>
 				<h2>Questions</h2>
