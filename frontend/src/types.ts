@@ -50,6 +50,15 @@ export interface QuestionAddAction {
 	};
 }
 
+export interface QuestionSearchAction {
+	type: 'SEARCH';
+	payload: {
+		data: {
+			questions: QuestionItem[];
+		};
+	};
+}
+
 export interface QuestionDeleteAction {
 	type: 'DELETE';
 	payload: {
@@ -61,7 +70,8 @@ export type QuestionAction =
 	| QuestionFetchAction
 	| QuestionAddAction
 	| QuestionDeleteAction
-	| QuestionFetchByCatgeoryAction;
+	| QuestionFetchByCatgeoryAction
+	| QuestionSearchAction;
 
 export interface QuizSetCategoryAction {
 	type: 'SET_CATEGORY';

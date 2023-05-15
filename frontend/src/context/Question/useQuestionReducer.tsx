@@ -48,7 +48,11 @@ export function useQuestionReducer(): [
 						({ id }) => action.payload.questionId !== id
 					),
 				};
-
+			case 'SEARCH':
+				return {
+					...state,
+					questions: action.payload.data.questions,
+				};
 			default:
 				return state;
 		}
