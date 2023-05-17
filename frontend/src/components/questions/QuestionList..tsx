@@ -1,7 +1,78 @@
-import '../../stylesheets/App.css';
 import QuestionCard from './QuestionCard';
 import { useQuestion } from '../../context/Question/QuestionProvider';
-import Search from '../shared/Search.';
+import styled from 'styled-components';
+import Navbar from '../shared/Navbar';
+
+interface ILi {
+	category: string;
+}
+
+const catBg: { [key: string]: string } = {
+	science: '#E3EEFF',
+	art: '#FFF7EC',
+	history: '#bef8f5',
+	geography: '#E9F8F1',
+	entertainment: '#F4DCD3',
+	sports: '#E0E3EF',
+};
+
+const Page = styled.div`
+	display: flex;
+	justify-content: space-between;
+	min-height: 100%;
+`;
+
+const Categories = styled.div`
+	background-color: transparent;
+	flex-basis: 30%;
+	padding: 36px;
+
+	h2 {
+		text-align: center;
+		color: #69668d;
+	}
+
+	ul {
+		list-style-type: none;
+		padding: 0;
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		grid-gap: 12px;
+	}
+`;
+
+const ListItem = styled.li<ILi>`
+	text-align: center;
+	background: ${(props) => catBg[props.category]};
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding 16px;
+	margin-bottom: 16px;
+	cursor: pointer;
+	border-radius: 8px;
+`;
+
+const QuestionView = styled.div`
+	background-color: #fef9ff;
+	flex-basis: 70%;
+	padding: 36px;
+`;
+
+const QuestionSection = styled.div`
+	margin-top: 48px;
+
+	h2 {
+		color: #69668d;
+		padding-bottom: 12px;
+	}
+`;
+
+const QuestionCards = styled.div`
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	grid-gap: 12px;
+`;
 
 const QuestionList = () => {
 	const { questions, categories, questionDispatch } = useQuestion();
@@ -31,30 +102,26 @@ const QuestionList = () => {
 		}
 	};
 
-	const searchQuestions = async (
-		query: string,
-		e: React.FormEvent<HTMLFormElement>
-	) => {
-		e.preventDefault();
-		const requestOptions = {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({
-				searchTerm: query,
-			}),
-		};
-		try {
-			const res = await fetch('/questions/search', requestOptions);
-			const data = await res.json();
-			questionDispatch({ type: 'SEARCH', payload: { data } });
-		} catch (e) {
-			console.log(e);
-		}
-	};
-
 	return (
-		<div className='question-view'>
-			<div className='categories-list'>
+		<Page>
+			<QuestionView>
+				<Navbar />
+				<QuestionSection>
+					<h2>Questions</h2>
+					<QuestionCards>
+						{questions.map((question, i) => (
+							<QuestionCard
+								key={i}
+								questionItem={question}
+								deleteQuestion={deleteQuestion}
+							/>
+						))}
+					</QuestionCards>
+
+					{/* <div className='pagination-menu'>{this.createPagination()}</div> */}
+				</QuestionSection>
+			</QuestionView>
+			<Categories>
 				<h2
 				// onClick={() => {
 				// 	this.getQuestions();
@@ -64,76 +131,24 @@ const QuestionList = () => {
 				</h2>
 				<ul>
 					{Object?.keys(categories).map((key) => (
-						<li key={key} onClick={() => fetchByCategory(key)}>
-							{categories[+key]}
+						<ListItem
+							key={key}
+							onClick={() => fetchByCategory(key)}
+							category={`${categories[+key].toLowerCase()}`}
+							role='button'
+						>
 							<img
 								className='category'
 								alt={`${categories[+key].toLowerCase()}`}
 								src={`${categories[+key].toLowerCase()}.svg`}
 							/>
-						</li>
+							{categories[+key]}
+						</ListItem>
 					))}
 				</ul>
-				<Search submitSearch={searchQuestions} />
-			</div>
-			<div className='questions-list'>
-				<h2>Questions</h2>
-				{questions.map((question, i) => (
-					<QuestionCard
-						key={i}
-						questionItem={question}
-						deleteQuestion={deleteQuestion}
-					/>
-				))}
-				{/* <div className='pagination-menu'>{this.createPagination()}</div> */}
-			</div>
-		</div>
+			</Categories>
+		</Page>
 	);
 };
-
-// getByCategory = (id) => {
-// 	$.ajax({
-// 		url: `/categories/${id}/questions`, //TODO: update request URL
-// 		type: 'GET',
-// 		success: (result) => {
-// 			this.setState({
-// 				questions: result.questions,
-// 				totalQuestions: result.total_questions,
-// 				currentCategory: result.current_category,
-// 			});
-// 			return;
-// 		},
-// 		error: (error) => {
-// 			alert('Unable to load questions. Please try your request again');
-// 			return;
-// 		},
-// 	});
-// };
-
-// submitSearch = (searchTerm) => {
-// 	$.ajax({
-// 		url: `/questions/search`, //TODO: update request URL
-// 		type: 'POST',
-// 		dataType: 'json',
-// 		contentType: 'application/json',
-// 		data: JSON.stringify({ searchTerm: searchTerm }),
-// 		xhrFields: {
-// 			withCredentials: true,
-// 		},
-// 		crossDomain: true,
-// 		success: (result) => {
-// 			this.setState({
-// 				questions: result.questions,
-// 				totalQuestions: result.total_questions,
-// 				currentCategory: result.current_category,
-// 			});
-// 			return;
-// 		},
-// 		error: (error) => {
-// 			alert('Unable to load questions. Please try your request again');
-// 			return;
-// 		},
-// 	});
-// };
 
 export default QuestionList;

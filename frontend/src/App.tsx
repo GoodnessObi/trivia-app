@@ -1,28 +1,50 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import './stylesheets/App.css';
 import QuestionList from './components/questions/QuestionList.';
-import Header from './components/shared/Header';
+import SideNav from './components/shared/SideNav';
 import FormView from './components/questions/AddQuestion';
 import QuizView from './components/quiz/QuizView.';
 import { QuestionProvider } from './context/Question/QuestionProvider';
 import { QuizProvider } from './context/Quiz/QuizProvider';
+import styled from 'styled-components';
+
+const Wrapper = styled.div`
+	background-color: #e3eeff;
+	padding: 30px;
+	min-height: 100vh;
+	color: #7a7987;
+`;
+
+const Page = styled.div`
+	display: flex;
+	border-radius: 50px;
+	background-color: #fff;
+	min-height: calc(100vh - 60px);
+`;
+
+const Body = styled.div`
+	width: calc(100% - 150px);
+`;
 
 const App = () => {
 	return (
-		<div className='App'>
-			<BrowserRouter>
-				<Header />
-				<QuestionProvider>
-					<QuizProvider>
-						<Routes>
-							<Route path='/' element={<QuestionList />} />
-							<Route path='/add' element={<FormView />} />
-							<Route path='/play' element={<QuizView />} />
-						</Routes>
-					</QuizProvider>
-				</QuestionProvider>
-			</BrowserRouter>
-		</div>
+		<Wrapper className='App'>
+			<Page>
+				<BrowserRouter>
+					<SideNav />
+					<QuestionProvider>
+						<QuizProvider>
+							<Body>
+								<Routes>
+									<Route path='/' element={<QuestionList />} />
+									<Route path='/add' element={<FormView />} />
+									<Route path='/play' element={<QuizView />} />
+								</Routes>
+							</Body>
+						</QuizProvider>
+					</QuestionProvider>
+				</BrowserRouter>
+			</Page>
+		</Wrapper>
 	);
 };
 
