@@ -23,9 +23,10 @@ const Page = styled.div`
 `;
 
 const Categories = styled.div`
-	background-color: transparent;
+	background-color: #fff;
 	flex-basis: 30%;
 	padding: 36px;
+	border-radius: 0 50px 50px 0;
 
 	h2 {
 		text-align: center;
@@ -54,7 +55,7 @@ const ListItem = styled.li<ILi>`
 `;
 
 const QuestionView = styled.div`
-	background-color: #fef9ff;
+	background-color: transparent;
 	flex-basis: 70%;
 	padding: 36px;
 `;

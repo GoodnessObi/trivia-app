@@ -12,11 +12,12 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 // }
 
 const NavBar = styled.div`
-	background-color: transparent;
+	background-color: #fff;
 	padding: 36px;
 	display: flex;
 	flex-direction: column;
 	min-width: 150px;
+	border-radius: 50px 0 0 50px;
 
 	ul {
 		list-style-type: none;

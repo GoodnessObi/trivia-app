@@ -10,6 +10,7 @@
 		"@mui/material": "^5.13.1",
 		"@tanstack/react-query": "4.10.1",
 		"corsproxy": "^1.5.0",
+		"formik": "^2.2.9",
 		"jquery": "^3.4.1",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
