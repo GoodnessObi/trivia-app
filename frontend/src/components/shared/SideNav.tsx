@@ -1,8 +1,9 @@
-import { Link } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import ListIcon from '@mui/icons-material/List';
 import AddIcon from '@mui/icons-material/Add';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+// import {NavLink}
 // import { useState, useEffect } from 'react';
 // import { LocalPlay } from '@mui/icons-material';
 
@@ -11,11 +12,12 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 // }
 
 const NavBar = styled.div`
-	background-color: transparent;
+	background-color: #fff;
 	padding: 36px;
 	display: flex;
 	flex-direction: column;
 	min-width: 150px;
+	border-radius: 50px 0 0 50px;
 
 	ul {
 		list-style-type: none;
@@ -28,7 +30,7 @@ const NavBar = styled.div`
 // 	// padding: 20px;
 // `;
 
-const StyledLink = styled(Link)`
+const StyledLink = styled(NavLink)`
 	color: #d1cff9;
 	font-weight: bold;
 	text-decoration: none;
@@ -36,9 +38,16 @@ const StyledLink = styled(Link)`
 	display: flex;
 	align-items: center;
 	cursor: pointer;
-	border-radius: 8px;
+	border-radius: 16px;
 	width: 100%;
 	padding: 12px 8px;
+	background-color: transparent;
+
+	&.active,
+	&:hover {
+		background-color: #e3e2fb;
+		color: #736ced;
+	}
 
 	span {
 		color: #736ced;
@@ -46,7 +55,7 @@ const StyledLink = styled(Link)`
 	}
 `;
 
-const LogoLink = styled(StyledLink)`
+const LogoLink = styled(Link)`
 	color: #000;
 	font-size: 24px;
 	fonr-weight: bold;
@@ -54,26 +63,7 @@ const LogoLink = styled(StyledLink)`
 `;
 
 const ListItem = styled.li`
-	background-color: transparent;
 	margin-bottom: 12px;
-	border-radius: 16px;
-
-	&.active {
-		background-color: #e3e2fb;
-
-		a {
-			color: #736ced;
-		}
-	}
-
-	&:hover,
-	&:active {
-		background-color: #e3e2fb;
-
-		a {
-			color: #736ced;
-		}
-	}
 `;
 
 export default function SideNav() {
@@ -95,21 +85,31 @@ export default function SideNav() {
 		<NavBar>
 			<LogoLink to='/'>Trivify</LogoLink>
 			<ul>
-				<ListItem className='active'>
-					<StyledLink to='/'>
+				<ListItem>
+					<StyledLink
+						to='/'
+						end
+						className={({ isActive }) => (isActive ? 'active' : '')}
+					>
 						{' '}
 						<ListIcon />
 						<span>List</span>
 					</StyledLink>
 				</ListItem>
 				<ListItem>
-					<StyledLink to='/add'>
+					<StyledLink
+						to='/add'
+						className={({ isActive }) => (isActive ? 'active' : '')}
+					>
 						<AddIcon />
 						<span>Add</span>
 					</StyledLink>
 				</ListItem>
 				<ListItem>
-					<StyledLink to='/play'>
+					<StyledLink
+						to='/play'
+						className={({ isActive }) => (isActive ? 'active' : '')}
+					>
 						<PlayArrowIcon />
 						<span>Play</span>
 					</StyledLink>

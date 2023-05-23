@@ -17,7 +17,7 @@ const Wrapper = styled.div`
 const Page = styled.div`
 	display: flex;
 	border-radius: 50px;
-	background-color: #fff;
+	background-color: #fef9ff;
 	min-height: calc(100vh - 60px);
 `;
 
