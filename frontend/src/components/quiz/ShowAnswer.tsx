@@ -1,14 +1,26 @@
 import { useQuiz } from '../../context/Quiz/QuizProvider';
+import SentimentSatisfiedAltOutlinedIcon from '@mui/icons-material/SentimentSatisfiedAltOutlined';
+import SentimentDissatisfiedOutlinedIcon from '@mui/icons-material/SentimentDissatisfiedOutlined';
 
 const ShowAnswer = () => {
 	const { quizState, quizDispatch } = useQuiz();
 	const { currentQuestion, isCorrect } = quizState;
 	return (
 		<div className='quiz-play-holder'>
-			<div className='quiz-question'>{currentQuestion.question}</div>
-			<div>{isCorrect ? 'You were correct!' : 'You were incorrect'}</div>
-			<div className='quiz-answer'>{currentQuestion.answer}</div>
-			<div
+			{isCorrect ? (
+				<p>
+					<SentimentSatisfiedAltOutlinedIcon />
+					You were correct!
+				</p>
+			) : (
+				<p>
+					<SentimentDissatisfiedOutlinedIcon />
+					You were incorrect!
+				</p>
+			)}
+			<p className='quiz-question'>{currentQuestion.question}</p>
+			<p className='quiz-answer'>The answer is {currentQuestion.answer}</p>
+			<button
 				className='next-question button'
 				onClick={() => {
 					quizDispatch({
@@ -17,9 +29,8 @@ const ShowAnswer = () => {
 					});
 				}}
 			>
-				{' '}
-				Next Question{' '}
-			</div>
+				Next Question
+			</button>
 		</div>
 	);
 };

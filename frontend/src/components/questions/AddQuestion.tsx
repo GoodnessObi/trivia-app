@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import '../../stylesheets/FormView.css';
 import { useQuestion } from '../../context/Question/QuestionProvider';
 import { QuestionItem } from '../../types';
@@ -13,20 +13,30 @@ import {
 	FieldProps,
 } from 'formik';
 
-const PageWrapper = styled.div`
+export const PageWrapper = styled.div`
 	min-height: 100%;
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 `;
 
 const FormWrapper = styled.div`
-	// height: 50%;
-	border: 1px solid red;
+	padding: 36px;
 `;
 
-const ImageWrapper = styled.div`
-	// height: 50%;
-	border: 2px solid red;
+const FormDiv = styled.div`
+	margin: 18px 0;
+	input,
+	select {
+		display: block;
+		width: 100%;
+		padding: 12px 16px;
+	}
+	label {
+		margin-bottom: 8px;
+	}
+`;
+
+export const ImageWrapper = styled.div`
 	border-radius: 8px;
 	width: 100%;
 	background: #fff;
@@ -73,8 +83,9 @@ const FormView = () => {
 
 	return (
 		<PageWrapper>
-			{/* <h2>Add a New Trivia Question</h2> */}
 			<FormWrapper>
+				<h2>Add New Trivia Question</h2>
+
 				<Formik
 					initialValues={initialState}
 					onSubmit={(values, actions) => {
@@ -85,34 +96,43 @@ const FormView = () => {
 					}}
 				>
 					<Form>
-						<label htmlFor='question'>Question</label>
-						<Field id='question' name='question' placeholder='Question' />
+						<FormDiv>
+							<label htmlFor='question'>Question</label>
+							<Field id='question' name='question' placeholder='Question' />
+						</FormDiv>
 
-						<label htmlFor='answer'>Answer</label>
-						<Field id='answer' name='answer' placeholder='Answer' />
+						<FormDiv>
+							<label htmlFor='answer'>Answer</label>
+							<Field id='answer' name='answer' placeholder='Answer' />
+						</FormDiv>
+						<FormDiv>
+							<label htmlFor='difficulty'>Difficulty</label>
+							<Field name='difficulty' as='select'>
+								<option value='1'>1</option>
+								<option value='2'>2</option>
+								<option value='3'>3</option>
+								<option value='4'>4</option>
+								<option value='5'>5</option>
+							</Field>
+						</FormDiv>
+						<FormDiv>
+							<label htmlFor='category'>Category</label>
 
-						<label htmlFor='difficulty'>Difficulty</label>
-						<Field name='difficulty' as='select'>
-							<option value='1'>1</option>
-							<option value='2'>2</option>
-							<option value='3'>3</option>
-							<option value='4'>4</option>
-							<option value='5'>5</option>
-						</Field>
-
-						<label htmlFor='category'>Category</label>
-
-						<Field name='category' as='select'>
-							{Object.keys(categories).map((id) => {
-								return (
-									<option key={id} value={id}>
-										{categories[+id]}
-									</option>
-								);
-							})}
-						</Field>
-
-						<input type='submit' className='button' value='Submit' />
+							<Field name='category' as='select'>
+								{Object.keys(categories).map((id) => {
+									return (
+										<option key={id} value={id}>
+											{categories[+id]}
+										</option>
+									);
+								})}
+							</Field>
+						</FormDiv>
+						<FormDiv>
+							<button type='submit' className='button'>
+								Submit
+							</button>
+						</FormDiv>
 					</Form>
 				</Formik>
 			</FormWrapper>

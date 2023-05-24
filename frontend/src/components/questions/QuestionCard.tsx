@@ -2,14 +2,17 @@ import { useState } from 'react';
 import { QuestionItem } from '../../types';
 import { useQuestion } from '../../context/Question/QuestionProvider';
 import styled from 'styled-components';
-import SchoolIcon from '@mui/icons-material/School';
-import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
+import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
+import LocalFireDepartmentOutlinedIcon from '@mui/icons-material/LocalFireDepartmentOutlined';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 
 const Card = styled.div`
 	background-color: #fff;
 	padding: 12px;
 	border-radius: 8px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 
 	p {
 		font-size: 16px;
@@ -55,30 +58,43 @@ const QuestionCard = ({ questionItem, deleteQuestion }: QuestionCardProps) => {
 	};
 	return (
 		<Card>
-			<CardStatus>
-				<div style={{ color: '#21B573' }}>
-					{new Array(questionItem.difficulty).fill('').map((_, index) => (
-						<SchoolIcon key={index} fontSize='small' />
-					))}
-					{new Array(5 - questionItem.difficulty).fill('').map((_, index) => (
-						<SchoolOutlinedIcon key={index} fontSize='small' />
-					))}
-				</div>
-				<img
-					className='category'
-					alt={`${categories[questionItem.category].toLowerCase()}`}
-					src={`${categories[questionItem.category].toLowerCase()}.svg`}
-				/>
-			</CardStatus>
-			<p>{questionItem.question}</p>
-			<p
-				className='answer'
-				style={{
-					visibility: visibleAnswer ? 'visible' : 'hidden',
-				}}
-			>
-				{questionItem.answer}
-			</p>
+			<div>
+				<CardStatus>
+					<div>
+						<span style={{ color: '#BB0000' }}>
+							{new Array(questionItem.difficulty).fill('').map((_, index) => (
+								<LocalFireDepartmentIcon key={index} fontSize='small' />
+							))}
+						</span>
+
+						<span style={{ color: '#C8C8C8' }}>
+							{new Array(5 - questionItem.difficulty)
+								.fill('')
+								.map((_, index) => (
+									<LocalFireDepartmentOutlinedIcon
+										key={index}
+										fontSize='small'
+									/>
+								))}
+						</span>
+					</div>
+					<img
+						className='category'
+						alt={`${categories[questionItem.category].toLowerCase()}`}
+						src={`${categories[questionItem.category].toLowerCase()}.svg`}
+					/>
+				</CardStatus>
+				<p>{questionItem.question}</p>
+				<p
+					className='answer'
+					style={{
+						visibility: visibleAnswer ? 'visible' : 'hidden',
+					}}
+				>
+					{questionItem.answer}
+				</p>
+			</div>
+
 			<CardAction>
 				<DeleteForeverOutlinedIcon
 					fontSize='small'
