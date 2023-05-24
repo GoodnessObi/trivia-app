@@ -3,6 +3,8 @@ import { Categories } from '../../types';
 import { useQuiz } from '../../context/Quiz/QuizProvider';
 import { PageWrapper, ImageWrapper } from '../questions/AddQuestion';
 import styled from 'styled-components';
+import Modal from '../shared/Modal';
+import FinalScore from './FinalScore';
 
 type CategoriesProps = {
 	categories: Categories;
@@ -106,6 +108,11 @@ const CategoriesList: React.JSXElementConstructor<CategoriesProps> = ({
 			<ImageWrapper>
 				<img src='/picture_3.jpg' alt='' />
 			</ImageWrapper>
+			{Object.keys(quizState.currentQuestion).length === 0 && (
+				<Modal>
+					<FinalScore />
+				</Modal>
+			)}
 		</PageWrapper>
 	);
 };

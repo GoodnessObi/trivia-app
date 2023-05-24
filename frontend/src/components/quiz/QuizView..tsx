@@ -10,7 +10,8 @@ export default function QuizView() {
 
 	return (
 		<>
-			{quizState.endGame ? (
+			{quizState.endGame ||
+			Object.keys(quizState.currentQuestion).length === 0 ? (
 				<CategoriesList categories={categories} />
 			) : (
 				<PlayQuizForm />
