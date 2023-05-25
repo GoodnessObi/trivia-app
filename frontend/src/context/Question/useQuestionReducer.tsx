@@ -7,14 +7,13 @@ interface QuestionState {
 	categories: Categories;
 	initialized: boolean;
 	currentCategory?: string;
+	reload?: boolean;
 }
 
 export function useQuestionReducer(): [
 	QuestionState,
 	React.Dispatch<QuestionAction>
 ] {
-	// TODO: Implement all action processing
-
 	const questionReducer = (
 		state: QuestionState,
 		action: QuestionAction
@@ -26,6 +25,7 @@ export function useQuestionReducer(): [
 					initialized: true,
 					questions: action.payload.data.questions,
 					categories: action.payload.data.categories,
+					reload: false,
 				};
 			case 'FETCH_BY_CATEGORY':
 				return {
@@ -39,7 +39,11 @@ export function useQuestionReducer(): [
 					id: uuid(),
 					...action.payload.question,
 				};
-				return { ...state, questions: { ...state.questions, ...question } };
+				return {
+					...state,
+					questions: [...state.questions, question],
+					reload: true,
+				};
 
 			case 'DELETE':
 				return {
@@ -47,6 +51,7 @@ export function useQuestionReducer(): [
 					questions: state.questions.filter(
 						({ id }) => action.payload.questionId !== id
 					),
+					reload: true,
 				};
 			case 'SEARCH':
 				return {
@@ -61,18 +66,35 @@ export function useQuestionReducer(): [
 	const [state, dispatch] = useReducer(questionReducer, {
 		questions: [],
 		categories: {},
-		initialized: false,
+		initialized: true,
+		reload: true,
 	});
 
-	useEffect(() => {
-		const fetchData = async () => {
-			const res = await fetch('/questions?page=1');
-			const data = await res.json();
-			dispatch({ type: 'FETCH', payload: { data } });
-		};
+	// useEffect(() => {
+	// 	const fetchData = async () => {
+	// 		const res = await fetch('/questions?page=1');
+	// 		const data = await res.json();
+	// 		dispatch({ type: 'FETCH', payload: { data } });
+	// 	};
 
-		fetchData();
-	}, []);
+	// 	fetchData();
+	// }, []);
+
+	useEffect(() => {
+		if (state.reload) {
+			try {
+				const fetchData = async () => {
+					const res = await fetch('/questions?page=1');
+					const data = await res.json();
+					console.log(data, 'I ran');
+					dispatch({ type: 'FETCH', payload: { data } });
+				};
+				fetchData();
+			} catch (e) {
+				console.log(e, 'fetch');
+			}
+		}
+	}, [state.reload]);
 
 	return [state, dispatch];
 }
