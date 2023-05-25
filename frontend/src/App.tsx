@@ -8,10 +8,13 @@ import { QuizProvider } from './context/Quiz/QuizProvider';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-	background-color: #e3eeff;
-	padding: 30px;
 	min-height: 100vh;
 	color: #7a7987;
+
+	@media (min-width: 768px) {
+		background-color: #e3eeff;
+		padding: 30px;
+	}
 `;
 
 const Page = styled.div`
@@ -22,7 +25,11 @@ const Page = styled.div`
 `;
 
 const Body = styled.div`
-	width: calc(100% - 150px);
+	width: 100%;
+
+	@media (min-width: 1025px) {
+		width: calc(100% - 150px);
+	}
 `;
 
 const App = () => {

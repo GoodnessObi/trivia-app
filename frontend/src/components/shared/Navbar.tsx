@@ -28,10 +28,14 @@ const LinkButton = styled(StyledLink)`
 	color: #fff;
 	background-color: #20a76d;
 	border: none;
-	padding: 12px 24px;
+	padding: 8px;
 	border-radius: 8px;
 	display: flex;
 	align-items: center;
+
+	@media (min-width: 768px) {
+		padding: 12px 24px;
+	}
 
 	span {
 		display: flex;
