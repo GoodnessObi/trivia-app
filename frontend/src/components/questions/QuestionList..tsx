@@ -2,6 +2,7 @@ import QuestionCard from './QuestionCard';
 import { useQuestion } from '../../context/Question/QuestionProvider';
 import styled from 'styled-components';
 import Navbar from '../shared/Navbar';
+import ManageSearchOutlinedIcon from '@mui/icons-material/ManageSearchOutlined';
 
 interface ILi {
 	category: string;
@@ -19,14 +20,27 @@ const catBg: { [key: string]: string } = {
 const Page = styled.div`
 	display: flex;
 	justify-content: space-between;
+	flex-direction: column;
 	min-height: 100%;
+
+	@media (min-width: 768px) {
+		flex-direction: row;
+	}
 `;
 
 const Categories = styled.div`
 	background-color: #fff;
-	flex-basis: 30%;
-	padding: 36px;
+	padding: 18px;
 	border-radius: 0 50px 50px 0;
+
+	@media (min-width: 768px) {
+		flex-basis: 30%;
+	}
+
+	@media (min-width: 1025px) {
+		padding: 36px;
+		// flex-basis: 30%;
+	}
 
 	h2 {
 		text-align: center;
@@ -37,8 +51,16 @@ const Categories = styled.div`
 		list-style-type: none;
 		padding: 0;
 		display: grid;
-		grid-template-columns: repeat(2, 1fr);
 		grid-gap: 12px;
+		grid-template-columns: repeat(2, 1fr);
+
+		@media (min-width: 768px) {
+			grid-template-columns: repeat(1, 1fr);
+		}
+
+		@media (min-width: 1025px) {
+			grid-template-columns: repeat(2, 1fr);
+		}
 	}
 `;
 
@@ -56,8 +78,16 @@ const ListItem = styled.li<ILi>`
 
 const QuestionView = styled.div`
 	background-color: transparent;
-	flex-basis: 70%;
-	padding: 36px;
+	padding: 18px;
+
+	@media (min-width: 768px) {
+		flex-basis: 70%;
+	}
+
+	@media (min-width: 1025px) {
+		// flex-basis: 70%;
+		padding: 36px;
+	}
 `;
 
 const QuestionSection = styled.div`
@@ -71,12 +101,29 @@ const QuestionSection = styled.div`
 
 const QuestionCards = styled.div`
 	display: grid;
-	grid-template-columns: repeat(2, 1fr);
+	grid-template-columns: repeat(1, 1fr);
 	grid-gap: 12px;
+
+	@media (min-width: 1025px) {
+		grid-template-columns: repeat(2, 1fr);
+	}
+`;
+
+const SectionHeader = styled.div`
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+`;
+
+const FIlterButton = styled.div`
+	@media (min-width: 768px) {
+		display: none;
+	}
 `;
 
 const QuestionList = () => {
 	const { questions, categories, questionDispatch } = useQuestion();
+	// const { quizState, quizDispatch } = useQuiz();
 
 	const deleteQuestion = async (id: string) => {
 		try {
@@ -108,7 +155,12 @@ const QuestionList = () => {
 			<QuestionView>
 				<Navbar />
 				<QuestionSection>
-					<h2>Questions</h2>
+					<SectionHeader>
+						<h2>Questions</h2>
+						<FIlterButton>
+							<ManageSearchOutlinedIcon />
+						</FIlterButton>
+					</SectionHeader>
 					<QuestionCards>
 						{questions.map((question, i) => (
 							<QuestionCard

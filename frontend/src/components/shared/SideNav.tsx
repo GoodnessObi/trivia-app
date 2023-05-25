@@ -3,32 +3,24 @@ import styled from 'styled-components';
 import ListIcon from '@mui/icons-material/List';
 import AddIcon from '@mui/icons-material/Add';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-// import {NavLink}
-// import { useState, useEffect } from 'react';
-// import { LocalPlay } from '@mui/icons-material';
-
-// interface ILi {
-// 	active: string;
-// }
 
 const NavBar = styled.div`
 	background-color: #fff;
-	padding: 36px;
+	padding: 18px;
 	display: flex;
 	flex-direction: column;
-	min-width: 150px;
 	border-radius: 50px 0 0 50px;
+
+	@media (min-width: 1025px) {
+		padding: 36px;
+		min-width: 150px;
+	}
 
 	ul {
 		list-style-type: none;
 		padding: 0;
 	}
 `;
-
-// const LeftNav = styled.div`
-// 	// background-color: #fff;
-// 	// padding: 20px;
-// `;
 
 const StyledLink = styled(NavLink)`
 	color: #d1cff9;
@@ -37,11 +29,19 @@ const StyledLink = styled(NavLink)`
 	text-align: center;
 	display: flex;
 	align-items: center;
+	justify-content: center;
 	cursor: pointer;
-	border-radius: 16px;
-	width: 100%;
-	padding: 12px 8px;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
 	background-color: transparent;
+
+	@media (min-width: 768px) {
+		border-radius: 16px;
+		padding: 12px 8px;
+		width: 100%;
+		height: unset;
+	}
 
 	&.active,
 	&:hover {
@@ -50,16 +50,25 @@ const StyledLink = styled(NavLink)`
 	}
 
 	span {
+		display: none;
 		color: #736ced;
-		margin-left: 8px;
+
+		@media (min-width: 768px) {
+			display: block;
+			margin-left: 8px;
+		}
 	}
 `;
 
 const LogoLink = styled(Link)`
 	color: #000;
-	font-size: 24px;
 	fonr-weight: bold;
+	font-size: 18px;
 	margin-bottom: 36px;
+
+	@media (min-width: 768px) {
+		font-size: 24px;
+	}
 `;
 
 const ListItem = styled.li`
@@ -67,20 +76,6 @@ const ListItem = styled.li`
 `;
 
 export default function SideNav() {
-	// const location = useLocation();
-	//
-	// const isActive = (arg: string): string => {
-	// 	console.log(location.pathname === arg ? 'active' : '', 'hey');
-	// 	return location.pathname === arg ? 'active' : '';
-	// };
-
-	// const [activeRoute, setActiveRoute] = useState(isActive(location.pathname));
-
-	// useEffect(() => {
-	// 	setActiveRoute(isActi);
-	// }, [location]);
-
-	// console.log('lllllllllllllll', location);
 	return (
 		<NavBar>
 			<LogoLink to='/'>Trivify</LogoLink>
