@@ -33,7 +33,11 @@ export function useQuestionReducer(): [
 					questions: action.payload.data.questions,
 					currentCategory: action.payload.data.currentCategory,
 				};
-
+			case 'RELOAD':
+				return {
+					...state,
+					reload: true,
+				};
 			case 'ADD_QUESTION':
 				const question = {
 					id: uuid(),
@@ -70,21 +74,11 @@ export function useQuestionReducer(): [
 		reload: true,
 	});
 
-	// useEffect(() => {
-	// 	const fetchData = async () => {
-	// 		const res = await fetch('/questions?page=1');
-	// 		const data = await res.json();
-	// 		dispatch({ type: 'FETCH', payload: { data } });
-	// 	};
-
-	// 	fetchData();
-	// }, []);
-
 	useEffect(() => {
 		if (state.reload) {
 			try {
 				const fetchData = async () => {
-					const res = await fetch('/questions?page=1');
+					const res = await fetch('/questions?page=2');
 					const data = await res.json();
 					console.log(data, 'I ran');
 					dispatch({ type: 'FETCH', payload: { data } });

@@ -17,9 +17,10 @@ const Categories = () => {
 	return (
 		<Section>
 			<h2
-			// onClick={() => {
-			// 	this.getQuestions();
-			// }}
+				onClick={() => {
+					questionDispatch({ type: 'RELOAD' });
+				}}
+				role='button'
 			>
 				Categories
 			</h2>

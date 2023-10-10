@@ -30,6 +30,7 @@ const Categories = styled.div`
 	h2 {
 		text-align: center;
 		color: #69668d;
+		cursor: pointer;
 	}
 
 	ul {

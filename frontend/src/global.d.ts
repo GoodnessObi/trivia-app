@@ -1,9 +1,11 @@
-type QuestionItem = {
+interface QuestionItem {
 	id: string;
 	question: string;
 	answer: string;
 	category: number;
 	difficulty: number;
-};
+}
 
-type Categories = { [key: number]: string };
+interface Categories {
+	[key: number]: string;
+}

@@ -10,6 +10,10 @@ export interface QuestionFetchAction {
 	};
 }
 
+export interface QuestionReloadAction {
+	type: 'RELOAD';
+}
+
 export interface QuestionFetchByCatgeoryAction {
 	type: 'FETCH_BY_CATEGORY';
 	payload: {
@@ -46,6 +50,7 @@ export interface QuestionDeleteAction {
 
 export type QuestionAction =
 	| QuestionFetchAction
+	| QuestionReloadAction
 	| QuestionAddAction
 	| QuestionDeleteAction
 	| QuestionFetchByCatgeoryAction
