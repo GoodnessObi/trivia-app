@@ -1,7 +1,7 @@
 import React from 'react';
-import '../../stylesheets/FormView.css';
-import { useQuestion } from '../../context/Question/QuestionProvider';
-import { QuestionItem } from '../../types';
+
+import { useQuestion } from '../context/Question/QuestionProvider';
+// import { QuestionItem } from '../types';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import {

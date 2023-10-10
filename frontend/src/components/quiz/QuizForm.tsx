@@ -1,11 +1,12 @@
 import styled from 'styled-components';
 import { useQuiz } from '../../context/Quiz/QuizProvider';
-import Modal from '../shared/Modal';
+import Modal from '../shared/Modal/Modal';
 import FinalScore from './FinalScore';
 import ShowAnswer from './ShowAnswer';
 import { useQuestion } from '../../context/Question/QuestionProvider';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import LocalFireDepartmentOutlinedIcon from '@mui/icons-material/LocalFireDepartmentOutlined';
+import Button from '../shared/Button/Button';
 
 interface ILi {
 	category: string;
@@ -143,13 +144,7 @@ const PlayQuizForm = () => {
 									value={guess}
 									onChange={handleChange}
 								/>
-								<button
-									className='submit-guess button'
-									type='submit'
-									onClick={submitGuess}
-								>
-									Submit Answer
-								</button>
+								<Button>Submit Answer</Button>
 							</FormDiv>
 						</form>
 					</QuestionCard>

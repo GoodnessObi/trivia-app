@@ -1,17 +1,17 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import QuestionList from './components/questions/QuestionList.';
+import { Routes, Route } from 'react-router-dom';
+import styled, { ThemeProvider } from 'styled-components';
+import GlobalStyle from './styles/GlobalStyles';
+import QuestionsView from './pages/Questions/Questions';
 import SideNav from './components/shared/SideNav';
-import FormView from './components/questions/AddQuestion';
-import QuizView from './components/quiz/QuizView.';
-import { QuestionProvider } from './context/Question/QuestionProvider';
-import { QuizProvider } from './context/Quiz/QuizProvider';
-import styled from 'styled-components';
+import FormView from './pages/AddQuestion';
+import QuizView from './pages/PlayQuiz/QuizView';
+import theme from './styles/theme';
 
 const Wrapper = styled.div`
 	min-height: 100vh;
 	color: #7a7987;
 
-	@media (min-width: 768px) {
+	@media (min-width: ${({ theme }) => theme.mediaQuery.mobile}) {
 		background-color: #e3eeff;
 		padding: 30px;
 	}
@@ -34,24 +34,21 @@ const Body = styled.div`
 
 const App = () => {
 	return (
-		<Wrapper className='App'>
-			<Page>
-				<BrowserRouter>
+		<ThemeProvider theme={theme}>
+			<GlobalStyle />
+			<Wrapper>
+				<Page>
 					<SideNav />
-					<QuestionProvider>
-						<QuizProvider>
-							<Body>
-								<Routes>
-									<Route path='/' element={<QuestionList />} />
-									<Route path='/add' element={<FormView />} />
-									<Route path='/play' element={<QuizView />} />
-								</Routes>
-							</Body>
-						</QuizProvider>
-					</QuestionProvider>
-				</BrowserRouter>
-			</Page>
-		</Wrapper>
+					<Body>
+						<Routes>
+							<Route path='/' element={<QuestionsView />} />
+							<Route path='/add' element={<FormView />} />
+							<Route path='/play' element={<QuizView />} />
+						</Routes>
+					</Body>
+				</Page>
+			</Wrapper>
+		</ThemeProvider>
 	);
 };
 
