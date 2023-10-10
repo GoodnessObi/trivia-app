@@ -3,7 +3,7 @@ import styled, { ThemeProvider } from 'styled-components';
 import GlobalStyle from './styles/GlobalStyles';
 import QuestionsView from './pages/Questions/Questions';
 import SideNav from './components/shared/SideNav';
-import FormView from './pages/AddQuestion';
+import FormView from './pages/AddQuestion/AddQuestion';
 import QuizView from './pages/PlayQuiz/QuizView';
 import theme from './styles/theme';
 

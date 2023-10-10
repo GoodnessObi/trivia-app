@@ -1,4 +1,4 @@
-import { QuizAction, QuizState } from '../../types';
+import { QuizAction, QuizState } from '../../types/quiz';
 import { useQuizReducer } from './useQuizReducer';
 import React, { useContext } from 'react';
 

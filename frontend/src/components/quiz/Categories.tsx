@@ -1,7 +1,6 @@
 import React from 'react';
-import { Categories } from '../../types';
 import { useQuiz } from '../../context/Quiz/QuizProvider';
-import { PageWrapper, ImageWrapper } from '../../pages/AddQuestion';
+import { PageWrapper, ImageWrapper } from '../../pages/AddQuestion/AddQuestion';
 import styled from 'styled-components';
 import Modal from '../shared/Modal/Modal';
 import FinalScore from './FinalScore';

@@ -5,3 +5,5 @@ type QuestionItem = {
 	category: number;
 	difficulty: number;
 };
+
+type Categories = { [key: number]: string };

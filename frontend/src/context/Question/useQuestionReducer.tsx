@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer } from 'react';
-import { QuestionItem, Categories, QuestionAction } from '../../types';
+import { QuestionAction } from '../../types/question';
 import { v4 as uuid } from 'uuid';
 
 interface QuestionState {
