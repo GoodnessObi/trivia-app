@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useReducer } from 'react';
-import { QuizAction, QuizState } from '../../types';
+import { QuizAction, QuizState } from '../../types/quiz';
 
 export function useQuizReducer(): [QuizState, React.Dispatch<QuizAction>] {
 	const evaluateAnswer = (guess: string, answer: string) => {

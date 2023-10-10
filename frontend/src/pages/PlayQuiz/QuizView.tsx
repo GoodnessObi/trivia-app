@@ -1,7 +1,6 @@
-import '../../stylesheets/QuizView.css';
-import CategoriesList from './Categories';
+import CategoriesList from '../../components/quiz/Categories';
 import { useQuiz } from '../../context/Quiz/QuizProvider';
-import PlayQuizForm from './QuizForm';
+import PlayQuizForm from '../../components/quiz/QuizForm';
 import { useQuestion } from '../../context/Question/QuestionProvider';
 
 export default function QuizView() {

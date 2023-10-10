@@ -1,6 +1,6 @@
-import { useQuestionReducer } from './useQuestionReducer';
 import React, { useContext } from 'react';
-import { QuestionItem, Categories, QuestionAction } from '../../types';
+import { QuestionAction } from '../../types/question';
+import { useQuestionReducer } from './useQuestionReducer';
 
 type QuestionContextType = {
 	questions: QuestionItem[];

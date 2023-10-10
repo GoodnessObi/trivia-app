@@ -1,5 +1,4 @@
 import React, { PropsWithChildren, useEffect, useRef } from 'react';
-import '../../stylesheets/Modal.css';
 import { createPortal } from 'react-dom';
 import styled from 'styled-components';
 

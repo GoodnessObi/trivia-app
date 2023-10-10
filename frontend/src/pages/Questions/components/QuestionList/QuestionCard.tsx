@@ -1,48 +1,14 @@
 import { useState } from 'react';
-import { QuestionItem } from '../../types';
-import { useQuestion } from '../../context/Question/QuestionProvider';
-import styled from 'styled-components';
+import { useQuestion } from '../../../../context/Question/QuestionProvider';
+import {
+	Card,
+	CardAction,
+	CardStatus,
+	StyledButton,
+} from './QuestionCard.styled';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import LocalFireDepartmentOutlinedIcon from '@mui/icons-material/LocalFireDepartmentOutlined';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
-
-const Card = styled.div`
-	background-color: #fff;
-	padding: 12px;
-	border-radius: 8px;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-
-	p {
-		font-size: 16px;
-
-		&.answer {
-			font-size: 12px;
-		}
-	}
-`;
-
-const CardAction = styled.div`
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-`;
-
-const CardStatus = styled.div`
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-`;
-
-const StyledButton = styled.button`
-	cursor: pointer;
-	color: #f3f3fd;
-	background-color: #736ced;
-	border-radius: 8px;
-	border: 0px;
-	padding: 8px;
-`;
 
 type QuestionCardProps = {
 	questionItem: QuestionItem;
