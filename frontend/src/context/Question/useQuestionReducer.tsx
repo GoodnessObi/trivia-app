@@ -1,13 +1,13 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useReducer } from 'react';
 import { QuestionAction } from '../../types/question';
 import { v4 as uuid } from 'uuid';
 
 interface QuestionState {
 	questions: QuestionItem[];
+	totalQuestions: number;
 	categories: Categories;
 	initialized: boolean;
 	currentCategory?: string;
-	reload?: boolean;
 }
 
 export function useQuestionReducer(): [
@@ -25,18 +25,14 @@ export function useQuestionReducer(): [
 					initialized: true,
 					questions: action.payload.data.questions,
 					categories: action.payload.data.categories,
-					reload: false,
+					totalQuestions: action.payload.data.total_questions,
 				};
 			case 'FETCH_BY_CATEGORY':
 				return {
 					...state,
 					questions: action.payload.data.questions,
-					currentCategory: action.payload.data.currentCategory,
-				};
-			case 'RELOAD':
-				return {
-					...state,
-					reload: true,
+					currentCategory: action.payload.data.current_category,
+					totalQuestions: action.payload.data.total_questions,
 				};
 			case 'ADD_QUESTION':
 				const question = {
@@ -46,16 +42,13 @@ export function useQuestionReducer(): [
 				return {
 					...state,
 					questions: [...state.questions, question],
-					reload: true,
 				};
-
 			case 'DELETE':
 				return {
 					...state,
 					questions: state.questions.filter(
 						({ id }) => action.payload.questionId !== id
 					),
-					reload: true,
 				};
 			case 'SEARCH':
 				return {
@@ -70,25 +63,25 @@ export function useQuestionReducer(): [
 	const [state, dispatch] = useReducer(questionReducer, {
 		questions: [],
 		categories: {},
+		totalQuestions: 0,
 		initialized: true,
-		reload: true,
 	});
 
-	useEffect(() => {
-		if (state.reload) {
-			try {
-				const fetchData = async () => {
-					const res = await fetch('/questions?page=2');
-					const data = await res.json();
-					console.log(data, 'I ran');
-					dispatch({ type: 'FETCH', payload: { data } });
-				};
-				fetchData();
-			} catch (e) {
-				console.log(e, 'fetch');
-			}
-		}
-	}, [state.reload]);
+	// useEffect(() => {
+	// 	if (state.reload) {
+	// 		try {
+	// 			const fetchData = async () => {
+	// 				const res = await fetch('/questions?page=2');
+	// 				const data = await res.json();
+	// 				console.log(data, 'I ran');
+	// 				dispatch({ type: 'FETCH', payload: { data } });
+	// 			};
+	// 			fetchData();
+	// 		} catch (e) {
+	// 			console.log(e, 'fetch');
+	// 		}
+	// 	}
+	// }, [state.reload]);
 
 	return [state, dispatch];
 }

@@ -1,4 +1,4 @@
-import ManageSearchOutlinedIcon from '@mui/icons-material/ManageSearchOutlined';
+import { useEffect, useState } from 'react';
 import {
 	QuestionSection,
 	SectionHeader,
@@ -7,9 +7,26 @@ import {
 } from './QuestionList.styled';
 import QuestionCard from './QuestionCard';
 import { useQuestion } from '../../../../context/Question/QuestionProvider';
+import Pagination from '../../../../components/shared/Pagination';
+import ManageSearchOutlinedIcon from '@mui/icons-material/ManageSearchOutlined';
 
 const QuestionList = () => {
-	const { questions, questionDispatch } = useQuestion();
+	const { questions, totalQuestions, questionDispatch } = useQuestion();
+	const [currentPage, setCurrentPage] = useState<number>(1);
+
+	useEffect(() => {
+		try {
+			const fetchData = async () => {
+				const res = await fetch(`/questions?page=${currentPage}`);
+				const data = await res.json();
+				questionDispatch({ type: 'FETCH', payload: { data } });
+			};
+			fetchData();
+		} catch (e) {
+			console.log(e, 'fetch');
+		}
+		// eslint-disable-next-line
+	}, [currentPage]);
 
 	const deleteQuestion = async (id: string) => {
 		try {
@@ -24,6 +41,10 @@ const QuestionList = () => {
 		} catch (e) {
 			console.log(e);
 		}
+	};
+
+	const handlePageChange = (value: number) => {
+		setCurrentPage(value);
 	};
 
 	return (
@@ -43,7 +64,7 @@ const QuestionList = () => {
 					/>
 				))}
 			</QuestionCards>
-			{/* <div className='pagination-menu'>{this.createPagination()}</div> */}
+			<Pagination totalItems={totalQuestions} onChange={handlePageChange} />
 		</QuestionSection>
 	);
 };
