@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
 import GlobalStyle from './styles/GlobalStyles';
 import QuestionsView from './pages/Questions/Questions';
@@ -41,7 +41,8 @@ const App = () => {
 					<SideNav />
 					<Body>
 						<Routes>
-							<Route path='/' element={<QuestionsView />} />
+							<Route path='/' element={<Navigate to='/questions' replace />} />
+							<Route path='/questions' element={<QuestionsView />} />
 							<Route path='/add' element={<FormView />} />
 							<Route path='/play' element={<QuizView />} />
 						</Routes>

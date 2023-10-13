@@ -26,6 +26,12 @@ export function useQuestionReducer(): [
 					categories: action.payload.data.categories,
 					totalQuestions: action.payload.data.total_questions,
 				};
+			case 'FETCH_CATEGORIES':
+				console.log(action.payload, 'pppppppppppp');
+				return {
+					...state,
+					categories: action.payload.data,
+				};
 			case 'FETCH_BY_CATEGORY':
 				return {
 					...state,

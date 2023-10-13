@@ -24,6 +24,7 @@ export const QuestionProvider: React.FC<QuestionProviderProps> = ({
 		{ initialized, categories, questions, totalQuestions },
 		questionDispatch,
 	] = useQuestionReducer();
+
 	return (
 		<QuestionContext.Provider
 			value={{ questions, categories, totalQuestions, questionDispatch }}

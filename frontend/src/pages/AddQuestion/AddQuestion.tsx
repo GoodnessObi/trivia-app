@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useQuestion } from '../../context/Question/QuestionProvider';
 import styled from 'styled-components';
 // import { styled } from '@mui/material/styles';
@@ -26,6 +26,26 @@ type questionType = z.infer<typeof questionSchema>;
 const FormView = () => {
 	const navigate = useNavigate();
 	const { categories, questionDispatch } = useQuestion();
+
+	useEffect(() => {
+		if (Object?.keys(categories).length === 0) {
+			try {
+				const fetchData = async () => {
+					const res = await fetch(`/categories`);
+					const data = await res.json();
+					questionDispatch({
+						type: 'FETCH_CATEGORIES',
+						payload: { data: data.categories },
+					});
+				};
+				fetchData();
+			} catch (e) {
+				console.log(e, 'fetch');
+			}
+		}
+		// eslint-disable-next-line
+	}, []);
+
 	const {
 		handleSubmit,
 		register,
@@ -44,7 +64,7 @@ const FormView = () => {
 		try {
 			const fetchResponse = await fetch('/questions', requestOptions);
 			const data = await fetchResponse.json();
-			// console.log(data, 'adddd');
+
 			questionDispatch({
 				type: 'ADD_QUESTION',
 				payload: { question: { id: data.created, ...values } },
@@ -104,11 +124,12 @@ const FormView = () => {
 						<MenuItem key={123} value='0'>
 							Select Category
 						</MenuItem>
-						{Object.keys(categories).map((id) => (
-							<MenuItem key={id} value={id}>
-								{categories[+id]}
-							</MenuItem>
-						))}
+						{Object?.keys(categories).length > 0 &&
+							Object.keys(categories).map((key) => (
+								<MenuItem key={key} value={key}>
+									{categories[+key]}
+								</MenuItem>
+							))}
 					</TextField>
 					<TextField
 						{...register('difficulty', {

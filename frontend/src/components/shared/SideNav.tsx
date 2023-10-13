@@ -82,7 +82,7 @@ export default function SideNav() {
 			<ul>
 				<ListItem>
 					<StyledLink
-						to='/'
+						to='/questions'
 						end
 						className={({ isActive }) => (isActive ? 'active' : '')}
 					>
