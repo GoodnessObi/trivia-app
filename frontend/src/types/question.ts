@@ -24,7 +24,7 @@ export interface QuestionFetchByCatgeoryAction {
 export interface QuestionAddAction {
 	type: 'ADD_QUESTION';
 	payload: {
-		question: Omit<QuestionItem, 'id'>;
+		question: QuestionItem;
 	};
 }
 

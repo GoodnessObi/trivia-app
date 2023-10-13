@@ -1,6 +1,5 @@
 import React, { useReducer } from 'react';
 import { QuestionAction } from '../../types/question';
-import { v4 as uuid } from 'uuid';
 
 interface QuestionState {
 	questions: QuestionItem[];
@@ -36,7 +35,6 @@ export function useQuestionReducer(): [
 				};
 			case 'ADD_QUESTION':
 				const question = {
-					id: uuid(),
 					...action.payload.question,
 				};
 				return {
