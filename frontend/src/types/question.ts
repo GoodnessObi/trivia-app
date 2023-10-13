@@ -10,6 +10,15 @@ export interface QuestionFetchAction {
 	};
 }
 
+export interface QuestionFetchCategoriesAction {
+	type: 'FETCH_CATEGORIES';
+	payload: {
+		data: {
+			categories: { [key: number]: string };
+		};
+	};
+}
+
 export interface QuestionFetchByCatgeoryAction {
 	type: 'FETCH_BY_CATEGORY';
 	payload: {
@@ -49,4 +58,5 @@ export type QuestionAction =
 	| QuestionAddAction
 	| QuestionDeleteAction
 	| QuestionFetchByCatgeoryAction
+	| QuestionFetchCategoriesAction
 	| QuestionSearchAction;

@@ -9,10 +9,14 @@ import QuestionCard from './QuestionCard';
 import { useQuestion } from '../../../../context/Question/QuestionProvider';
 import Pagination from '../../../../components/shared/Pagination';
 import ManageSearchOutlinedIcon from '@mui/icons-material/ManageSearchOutlined';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const QuestionList = () => {
 	const { questions, totalQuestions, questionDispatch } = useQuestion();
-	const [currentPage, setCurrentPage] = useState<number>(1);
+	const location = useLocation();
+	const navigate = useNavigate();
+	const queryParams = new URLSearchParams(location.search);
+	const currentPage = Number(queryParams.get('page')) || 1;
 
 	useEffect(() => {
 		try {
@@ -44,7 +48,8 @@ const QuestionList = () => {
 	};
 
 	const handlePageChange = (value: number) => {
-		setCurrentPage(value);
+		queryParams.set('page', value.toString());
+		navigate({ search: queryParams.toString() });
 	};
 
 	return (
