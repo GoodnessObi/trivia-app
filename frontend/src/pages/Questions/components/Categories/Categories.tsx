@@ -8,6 +8,7 @@ const Categories = () => {
 		try {
 			const res = await fetch(`/categories/${id}/questions`);
 			const data = await res.json();
+
 			questionDispatch({ type: 'FETCH_BY_CATEGORY', payload: { data } });
 		} catch (e) {
 			console.log(e);
@@ -18,7 +19,7 @@ const Categories = () => {
 		<Section>
 			<h2
 				onClick={() => {
-					questionDispatch({ type: 'RELOAD' });
+					console.log('fetch alllll');
 				}}
 				role='button'
 			>

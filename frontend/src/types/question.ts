@@ -4,14 +4,10 @@ export interface QuestionFetchAction {
 		data: {
 			questions: QuestionItem[];
 			categories: { [key: number]: string };
-			totalQuestions: number;
-			currentCategory?: number;
+			total_questions: number;
+			current_category?: number;
 		};
 	};
-}
-
-export interface QuestionReloadAction {
-	type: 'RELOAD';
 }
 
 export interface QuestionFetchByCatgeoryAction {
@@ -19,8 +15,8 @@ export interface QuestionFetchByCatgeoryAction {
 	payload: {
 		data: {
 			questions: QuestionItem[];
-			totalQuestions: number;
-			currentCategory?: string;
+			total_questions: number;
+			current_category?: string;
 		};
 	};
 }
@@ -28,7 +24,7 @@ export interface QuestionFetchByCatgeoryAction {
 export interface QuestionAddAction {
 	type: 'ADD_QUESTION';
 	payload: {
-		question: Omit<QuestionItem, 'id'>;
+		question: QuestionItem;
 	};
 }
 
@@ -50,7 +46,6 @@ export interface QuestionDeleteAction {
 
 export type QuestionAction =
 	| QuestionFetchAction
-	| QuestionReloadAction
 	| QuestionAddAction
 	| QuestionDeleteAction
 	| QuestionFetchByCatgeoryAction

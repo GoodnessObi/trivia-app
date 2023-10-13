@@ -5,6 +5,7 @@ import { useQuestionReducer } from './useQuestionReducer';
 type QuestionContextType = {
 	questions: QuestionItem[];
 	categories: Categories;
+	totalQuestions: number;
 	questionDispatch: React.Dispatch<QuestionAction>;
 };
 
@@ -19,11 +20,13 @@ type QuestionProviderProps = {
 export const QuestionProvider: React.FC<QuestionProviderProps> = ({
 	children,
 }) => {
-	const [{ initialized, categories, questions }, questionDispatch] =
-		useQuestionReducer();
+	const [
+		{ initialized, categories, questions, totalQuestions },
+		questionDispatch,
+	] = useQuestionReducer();
 	return (
 		<QuestionContext.Provider
-			value={{ questions, categories, questionDispatch }}
+			value={{ questions, categories, totalQuestions, questionDispatch }}
 		>
 			{initialized ? children : <div>loading...</div>}
 		</QuestionContext.Provider>

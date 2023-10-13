@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import { useQuiz } from '../../context/Quiz/QuizProvider';
-import Modal from '../shared/Modal/Modal';
+import Modal from '../shared/Modal';
 import FinalScore from './FinalScore';
 import ShowAnswer from './ShowAnswer';
 import { useQuestion } from '../../context/Question/QuestionProvider';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import LocalFireDepartmentOutlinedIcon from '@mui/icons-material/LocalFireDepartmentOutlined';
-import Button from '../shared/Button/Button';
+import Button from '../shared/Button';
 
 interface ILi {
 	category: string;
