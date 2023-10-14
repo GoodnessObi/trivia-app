@@ -4,8 +4,10 @@ import Modal from '../shared/Modal';
 import FinalScore from './FinalScore';
 import ShowAnswer from './ShowAnswer';
 import { useQuestion } from '../../context/Question/QuestionProvider';
-import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
-import LocalFireDepartmentOutlinedIcon from '@mui/icons-material/LocalFireDepartmentOutlined';
+import {
+	LocalFireDepartment,
+	LocalFireDepartmentOutlined,
+} from '@mui/icons-material';
 import Button from '../shared/Button';
 
 interface ILi {
@@ -107,7 +109,7 @@ const PlayQuizForm = () => {
 									{new Array(currentQuestion.difficulty)
 										.fill('')
 										.map((_, index) => (
-											<LocalFireDepartmentIcon key={index} fontSize='small' />
+											<LocalFireDepartment key={index} fontSize='small' />
 										))}
 								</span>
 
@@ -115,7 +117,7 @@ const PlayQuizForm = () => {
 									{new Array(5 - currentQuestion.difficulty)
 										.fill('')
 										.map((_, index) => (
-											<LocalFireDepartmentOutlinedIcon
+											<LocalFireDepartmentOutlined
 												key={index}
 												fontSize='small'
 											/>
@@ -144,7 +146,13 @@ const PlayQuizForm = () => {
 									value={guess}
 									onChange={handleChange}
 								/>
-								<Button>Submit Answer</Button>
+								<button
+									className='submit-guess button'
+									type='submit'
+									onClick={submitGuess}
+								>
+									Submit Answer
+								</button>
 							</FormDiv>
 						</form>
 					</QuestionCard>

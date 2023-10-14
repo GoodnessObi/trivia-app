@@ -1,4 +1,4 @@
-import { useQuestion } from '../../../../context/Question/QuestionProvider';
+import { useQuestion } from '../../../context/Question/QuestionProvider';
 import { Categories as Section, ListItem } from './Catgeories.styled';
 
 const Categories = () => {

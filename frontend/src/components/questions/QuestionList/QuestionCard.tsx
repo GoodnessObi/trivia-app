@@ -1,14 +1,18 @@
 import { useState } from 'react';
-import { useQuestion } from '../../../../context/Question/QuestionProvider';
+import { useQuestion } from '../../../context/Question/QuestionProvider';
 import {
 	Card,
 	CardAction,
 	CardStatus,
 	StyledButton,
 } from './QuestionCard.styled';
-import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
-import LocalFireDepartmentOutlinedIcon from '@mui/icons-material/LocalFireDepartmentOutlined';
-import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
+import {
+	DeleteForeverOutlined,
+	MilitaryTech,
+	MilitaryTechOutlined,
+	WorkspacePremium,
+	WorkspacePremiumOutlined,
+} from '@mui/icons-material';
 
 type QuestionCardProps = {
 	questionItem: QuestionItem;
@@ -29,7 +33,7 @@ const QuestionCard = ({ questionItem, deleteQuestion }: QuestionCardProps) => {
 					<div>
 						<span style={{ color: '#BB0000' }}>
 							{new Array(questionItem.difficulty).fill('').map((_, index) => (
-								<LocalFireDepartmentIcon key={index} fontSize='small' />
+								<MilitaryTech key={index} fontSize='small' />
 							))}
 						</span>
 
@@ -37,10 +41,7 @@ const QuestionCard = ({ questionItem, deleteQuestion }: QuestionCardProps) => {
 							{new Array(5 - questionItem.difficulty)
 								.fill('')
 								.map((_, index) => (
-									<LocalFireDepartmentOutlinedIcon
-										key={index}
-										fontSize='small'
-									/>
+									<MilitaryTechOutlined key={index} fontSize='small' />
 								))}
 						</span>
 					</div>
@@ -62,17 +63,11 @@ const QuestionCard = ({ questionItem, deleteQuestion }: QuestionCardProps) => {
 			</div>
 
 			<CardAction>
-				<DeleteForeverOutlinedIcon
+				<DeleteForeverOutlined
 					fontSize='small'
 					onClick={() => deleteQuestion(questionItem.id)}
 					color='warning'
 				/>
-				{/* <img
-					src='delete.png'
-					alt='delete'
-					className='delete'
-					onClick={() => deleteQuestion(questionItem.id)}
-				/> */}
 				<StyledButton onClick={() => flipVisibility()}>
 					{visibleAnswer ? 'Hide' : 'View'} Answer
 				</StyledButton>

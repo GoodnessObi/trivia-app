@@ -1,7 +1,7 @@
-import CategoriesList from '../../components/quiz/Categories';
-import { useQuiz } from '../../context/Quiz/QuizProvider';
-import PlayQuizForm from '../../components/quiz/QuizForm';
-import { useQuestion } from '../../context/Question/QuestionProvider';
+import CategoriesList from '../components/quiz/Categories';
+import { useQuiz } from '../context/Quiz/QuizProvider';
+import PlayQuizForm from '../components/quiz/QuizForm';
+import { useQuestion } from '../context/Question/QuestionProvider';
 import { useEffect } from 'react';
 
 export default function QuizView() {

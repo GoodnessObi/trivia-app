@@ -6,8 +6,8 @@ import {
 	QuestionCards,
 } from './QuestionList.styled';
 import QuestionCard from './QuestionCard';
-import { useQuestion } from '../../../../context/Question/QuestionProvider';
-import Pagination from '../../../../components/shared/Pagination';
+import { useQuestion } from '../../../context/Question/QuestionProvider';
+import Pagination from '../../shared/Pagination';
 import ManageSearchOutlinedIcon from '@mui/icons-material/ManageSearchOutlined';
 import { useLocation, useNavigate } from 'react-router-dom';
 

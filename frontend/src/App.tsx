@@ -1,10 +1,10 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
 import GlobalStyle from './styles/GlobalStyles';
-import QuestionsView from './pages/Questions/Questions';
+import QuestionsView from './pages/QuestionsView';
 import SideNav from './components/shared/SideNav';
-import FormView from './pages/AddQuestion/AddQuestion';
-import QuizView from './pages/PlayQuiz/QuizView';
+import FormView from './pages/AddQuestionView';
+import QuizView from './pages/QuizView';
 import theme from './styles/theme';
 
 const Wrapper = styled.div`
