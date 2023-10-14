@@ -1,14 +1,11 @@
 import React, { useEffect } from 'react';
-import { useQuestion } from '../../context/Question/QuestionProvider';
+import { useQuestion } from '../context/Question/QuestionProvider';
 import styled from 'styled-components';
-// import { styled } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import MenuItem from '@mui/material/MenuItem';
-import { useForm } from 'react-hook-form';
+import { Box, TextField, MenuItem } from '@mui/material';
 
 const questionSchema = z.object({
 	question: z.string().trim().min(1, { message: 'Question is required' }),
@@ -54,6 +51,10 @@ const FormView = () => {
 		resolver: zodResolver(questionSchema),
 	});
 
+	const getPageNumber = (value: number) => {
+		return Math.ceil(value / 10);
+	};
+
 	const onSubmit = async (values: questionType) => {
 		console.log(values, 'gdfhghfdh');
 		const requestOptions = {
@@ -64,12 +65,15 @@ const FormView = () => {
 		try {
 			const fetchResponse = await fetch('/questions', requestOptions);
 			const data = await fetchResponse.json();
-
+			console.log(data);
 			questionDispatch({
 				type: 'ADD_QUESTION',
 				payload: { question: { id: data.created, ...values } },
 			});
-			return navigate('/');
+
+			const page = getPageNumber(data.total_questions);
+
+			return navigate(`/questions/?page=${page}`);
 		} catch (e) {
 			console.log(e);
 		}

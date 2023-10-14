@@ -6,8 +6,8 @@ import {
 	QuestionCards,
 } from './QuestionList.styled';
 import QuestionCard from './QuestionCard';
-import { useQuestion } from '../../../../context/Question/QuestionProvider';
-import Pagination from '../../../../components/shared/Pagination';
+import { useQuestion } from '../../../context/Question/QuestionProvider';
+import Pagination from '../../shared/Pagination';
 import ManageSearchOutlinedIcon from '@mui/icons-material/ManageSearchOutlined';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -17,6 +17,8 @@ const QuestionList = () => {
 	const navigate = useNavigate();
 	const queryParams = new URLSearchParams(location.search);
 	const currentPage = Number(queryParams.get('page')) || 1;
+
+	console.log(currentPage, 'lissssssssst');
 
 	useEffect(() => {
 		try {
@@ -69,7 +71,11 @@ const QuestionList = () => {
 					/>
 				))}
 			</QuestionCards>
-			<Pagination totalItems={totalQuestions} onChange={handlePageChange} />
+			<Pagination
+				totalItems={totalQuestions}
+				onChange={handlePageChange}
+				currentPage={currentPage}
+			/>
 		</QuestionSection>
 	);
 };
