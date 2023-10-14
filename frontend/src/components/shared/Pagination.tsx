@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from 'react';
+// import React, { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import styled from 'styled-components';
 
 type PaginationProps = {
 	totalItems: number;
 	itemsPerPage?: number;
+	currentPage: number;
 	onChange: (value: number) => void;
 };
 
 const Pagination = ({
 	totalItems,
 	itemsPerPage,
+	currentPage,
 	onChange,
 }: PaginationProps) => {
 	// const [itemOffset, setItemOffset] = useState(0);
@@ -37,6 +39,7 @@ const Pagination = ({
 				breakLabel='...'
 				nextLabel='next >'
 				onPageChange={handlePageClick}
+				initialPage={currentPage - 1}
 				pageRangeDisplayed={5}
 				pageCount={pageCount}
 				previousLabel='< previous'

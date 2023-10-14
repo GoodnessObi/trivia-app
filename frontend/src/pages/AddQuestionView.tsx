@@ -51,6 +51,10 @@ const FormView = () => {
 		resolver: zodResolver(questionSchema),
 	});
 
+	const getPageNumber = (value: number) => {
+		return Math.ceil(value / 10);
+	};
+
 	const onSubmit = async (values: questionType) => {
 		console.log(values, 'gdfhghfdh');
 		const requestOptions = {
@@ -61,12 +65,15 @@ const FormView = () => {
 		try {
 			const fetchResponse = await fetch('/questions', requestOptions);
 			const data = await fetchResponse.json();
-
+			console.log(data);
 			questionDispatch({
 				type: 'ADD_QUESTION',
 				payload: { question: { id: data.created, ...values } },
 			});
-			return navigate('/');
+
+			const page = getPageNumber(data.total_questions);
+
+			return navigate(`/questions/?page=${page}`);
 		} catch (e) {
 			console.log(e);
 		}

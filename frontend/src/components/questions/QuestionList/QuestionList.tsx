@@ -18,6 +18,8 @@ const QuestionList = () => {
 	const queryParams = new URLSearchParams(location.search);
 	const currentPage = Number(queryParams.get('page')) || 1;
 
+	console.log(currentPage, 'lissssssssst');
+
 	useEffect(() => {
 		try {
 			const fetchData = async () => {
@@ -69,7 +71,11 @@ const QuestionList = () => {
 					/>
 				))}
 			</QuestionCards>
-			<Pagination totalItems={totalQuestions} onChange={handlePageChange} />
+			<Pagination
+				totalItems={totalQuestions}
+				onChange={handlePageChange}
+				currentPage={currentPage}
+			/>
 		</QuestionSection>
 	);
 };
