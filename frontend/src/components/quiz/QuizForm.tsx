@@ -4,11 +4,101 @@ import Modal from '../shared/Modal';
 import FinalScore from './FinalScore';
 import ShowAnswer from './ShowAnswer';
 import { useQuestion } from '../../context/Question/QuestionProvider';
-import {
-	LocalFireDepartment,
-	LocalFireDepartmentOutlined,
-} from '@mui/icons-material';
+import { MilitaryTech, MilitaryTechOutlined } from '@mui/icons-material';
 import Button from '../shared/Button';
+import { Stack, TextField } from '@mui/material';
+
+const PlayQuizForm = () => {
+	const { categories } = useQuestion();
+	const { quizState, quizDispatch } = useQuiz();
+
+	const { currentQuestion, guess, showAnswer, quizCategory } = quizState;
+
+	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		event.preventDefault();
+		quizDispatch({
+			type: 'MAKE_GUESS',
+			payload: { guess: event.target.value },
+		});
+	};
+
+	const submitGuess = (event: React.MouseEvent<HTMLElement>) => {
+		event.preventDefault();
+		quizDispatch({ type: 'SUBMIT_GUESS' });
+	};
+
+	return (
+		<>
+			{Object.keys(currentQuestion).length > 0 && (
+				<PageWrapper>
+					<h2>Current Category: {quizCategory.type.toUpperCase()}</h2>
+					<QuestionCard
+						category={`${categories[currentQuestion.category].toLowerCase()}`}
+					>
+						<Stack spacing={2}>
+							<QuestionHeader>
+								<div>
+									<span style={{ color: '#BB0000' }}>
+										{new Array(currentQuestion.difficulty)
+											.fill('')
+											.map((_, index) => (
+												<MilitaryTech key={index} fontSize='small' />
+											))}
+									</span>
+
+									<span style={{ color: '#C8C8C8' }}>
+										{new Array(5 - currentQuestion.difficulty)
+											.fill('')
+											.map((_, index) => (
+												<MilitaryTechOutlined key={index} fontSize='small' />
+											))}
+									</span>
+								</div>
+
+								<ImgWrapper>
+									<img
+										className='category'
+										alt={`${categories[
+											currentQuestion.category
+										].toLowerCase()}`}
+										src={`${categories[
+											currentQuestion.category
+										].toLowerCase()}.svg`}
+									/>
+								</ImgWrapper>
+							</QuestionHeader>
+
+							<div className='quiz-question'>{currentQuestion.question}</div>
+
+							<TextField
+								fullWidth
+								label=''
+								id='guess'
+								value={guess}
+								onChange={handleChange}
+								placeholder='Type in your guess'
+							/>
+
+							<button
+								className='submit-guess button'
+								type='submit'
+								onClick={submitGuess}
+							>
+								Submit Answer
+							</button>
+						</Stack>
+					</QuestionCard>
+
+					{showAnswer && (
+						<Modal>
+							<ShowAnswer />
+						</Modal>
+					)}
+				</PageWrapper>
+			)}
+		</>
+	);
+};
 
 interface ILi {
 	category: string;
@@ -25,7 +115,6 @@ const catBg: { [id: string]: string } = {
 };
 
 const PageWrapper = styled.div`
-	width: 100%;
 	padding: 36px;
 
 	h2 {
@@ -38,7 +127,7 @@ const FormDiv = styled.div`
 	input,
 	select {
 		display: block;
-		width: 100%;
+		// width: 100%;
 		padding: 12px 16px;
 	}
 	label {
@@ -75,97 +164,5 @@ const ImgWrapper = styled.div`
 		width: 35px;
 	}
 `;
-
-const PlayQuizForm = () => {
-	const { categories } = useQuestion();
-	const { quizState, quizDispatch } = useQuiz();
-
-	const { currentQuestion, guess, showAnswer, quizCategory } = quizState;
-
-	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		event.preventDefault();
-		quizDispatch({
-			type: 'MAKE_GUESS',
-			payload: { guess: event.target.value },
-		});
-	};
-
-	const submitGuess = (event: React.MouseEvent<HTMLElement>) => {
-		event.preventDefault();
-		quizDispatch({ type: 'SUBMIT_GUESS' });
-	};
-
-	return (
-		<>
-			{Object.keys(currentQuestion).length > 0 && (
-				<PageWrapper>
-					<h2>Current Category: {quizCategory.type.toLocaleUpperCase()}</h2>
-					<QuestionCard
-						category={`${categories[currentQuestion.category].toLowerCase()}`}
-					>
-						<QuestionHeader>
-							<div>
-								<span style={{ color: '#BB0000' }}>
-									{new Array(currentQuestion.difficulty)
-										.fill('')
-										.map((_, index) => (
-											<LocalFireDepartment key={index} fontSize='small' />
-										))}
-								</span>
-
-								<span style={{ color: '#C8C8C8' }}>
-									{new Array(5 - currentQuestion.difficulty)
-										.fill('')
-										.map((_, index) => (
-											<LocalFireDepartmentOutlined
-												key={index}
-												fontSize='small'
-											/>
-										))}
-								</span>
-							</div>
-
-							<ImgWrapper>
-								<img
-									className='category'
-									alt={`${categories[currentQuestion.category].toLowerCase()}`}
-									src={`${categories[
-										currentQuestion.category
-									].toLowerCase()}.svg`}
-								/>
-							</ImgWrapper>
-						</QuestionHeader>
-
-						<div className='quiz-question'>{currentQuestion.question}</div>
-
-						<form>
-							<FormDiv>
-								<input
-									type='text'
-									name='guess'
-									value={guess}
-									onChange={handleChange}
-								/>
-								<button
-									className='submit-guess button'
-									type='submit'
-									onClick={submitGuess}
-								>
-									Submit Answer
-								</button>
-							</FormDiv>
-						</form>
-					</QuestionCard>
-
-					{showAnswer && (
-						<Modal>
-							<ShowAnswer />
-						</Modal>
-					)}
-				</PageWrapper>
-			)}
-		</>
-	);
-};
 
 export default PlayQuizForm;
